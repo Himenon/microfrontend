@@ -1,0 +1,24 @@
+{
+  "name": "@himenon/microfrontend-app",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Himenon/micro-frontend.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production ts-node -P ./scripts/tsconfig.cli.json ./scripts/build.ts",
+    "depcruise": "depcruise --validate .dependency-cruiser.js src",
+    "depcruise:html": "depcruise --validate --output-type err-html -f dependency-report.html .dependency-cruiser.js src",
+    "deploy": "yarn build && yarn publish:site",
+    "prettier": "prettier --config .prettierrc --write src/**/*",
+    "publish:site": "ts-node -P ./scripts/tsconfig.cli.json ./scripts/publish.ts",
+    "serve": "serve dist",
+    "start": "cross-env NODE_ENV=development ts-node -P ./scripts/tsconfig.cli.json ./scripts/develop.ts"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0"
+  }
+}
