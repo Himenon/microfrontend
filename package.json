@@ -1,5 +1,5 @@
 {
-  "name": "micro-frontend",
+  "name": "@himenon/microfrontend",
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
