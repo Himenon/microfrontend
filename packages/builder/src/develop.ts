@@ -2,7 +2,7 @@ import webpack from "webpack";
 import { generateConfig } from "./webpack.config";
 import webpackDevServer from "webpack-dev-server";
 
-const main = async () => {
+export const exec = async (): Promise<void> => {
   const isProduction = process.env.NODE_ENV === "production";
   const config = generateConfig(isProduction);
   const compiler = webpack(config);
@@ -13,9 +13,3 @@ const main = async () => {
   });
   server.listen(9000);
 };
-
-main().catch((e) => {
-  if (e && e.message) {
-    console.error(e.message);
-  }
-});

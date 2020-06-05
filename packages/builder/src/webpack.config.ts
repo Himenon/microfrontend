@@ -14,7 +14,9 @@ const ForkTsCheckerNotifierWebpackPlugin = require("fork-ts-checker-notifier-web
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 
-const rootPath = path.resolve(__dirname, "../");
+// 実行場所がrootになる
+const rootPath = process.cwd();
+
 const appPath = (nextPath: string) => path.join(rootPath, nextPath);
 
 export const generateConfig = (isProduction: boolean): webpack.Configuration => {
@@ -148,7 +150,7 @@ export const generateConfig = (isProduction: boolean): webpack.Configuration => 
     ].filter(Boolean),
     output: {
       filename: "scripts/[name].bundle.js",
-      path: path.resolve(__dirname, "../dist"),
+      path: appPath("./dist"),
     },
     externals: {
       react: "React",
