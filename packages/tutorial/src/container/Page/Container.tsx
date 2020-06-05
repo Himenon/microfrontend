@@ -1,23 +1,17 @@
 import * as Domain from "@app/domain";
+import { Page } from "@app/component";
 import * as React from "react";
-import * as Counter from "../Counter";
 import { generateStore, Store } from "./Store";
-import { CounterPage } from "@app/component";
 
-const generateProps = (stores: Domain.Stores, store: Store): CounterPage.Props => {
-  return {
-    heading: {
-      children: "Counter",
-    },
-    counter: Counter.generateProps(store.counter),
-  };
+const generateProps = (stores: Domain.Stores, store: Store): Page.Props => {
+  return {};
 };
 
-export const Container = ({ reducers }: { reducers: Domain.Reducers }) => {
+export const Container = ({ reducers }: { reducers: Domain.Reducers }): React.ReactElement => {
   const createReducer = <T, S>([state, dispatch]: [T, S]): { state: T; dispatch: S } => ({ state, dispatch });
   const domainStores: Domain.Stores = {
     app: createReducer(React.useReducer(...reducers.app)),
   };
   const viewStore = generateStore(domainStores);
-  return <CounterPage.Component {...generateProps(domainStores, viewStore)} />;
+  return <Page.Component {...generateProps(domainStores, viewStore)} />;
 };

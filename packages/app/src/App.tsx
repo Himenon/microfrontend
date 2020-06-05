@@ -6,7 +6,7 @@ interface AppProps {
   reducers: Domain.Reducers;
 }
 
-export const App = ({ reducers }: AppProps) => {
+export const App = ({ reducers }: AppProps): React.ReactElement => {
   return <Page.Container reducers={reducers} />;
 };
 

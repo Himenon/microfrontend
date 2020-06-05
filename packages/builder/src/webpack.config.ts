@@ -24,7 +24,7 @@ export const generateConfig = (isProduction: boolean): webpack.Configuration => 
   const tsLoader: webpack.RuleSetUse = {
     loader: "ts-loader",
     options: {
-      configFile: "tsconfig.json",
+      configFile: appPath("tsconfig.json"),
       transpileOnly: true,
     },
   };
@@ -129,7 +129,12 @@ export const generateConfig = (isProduction: boolean): webpack.Configuration => 
       contentBase: "./dist",
     },
     plugins: [
-      isProduction && !isCI && new BundleAnalyzerPlugin(),
+      isProduction &&
+        !isCI &&
+        new BundleAnalyzerPlugin({
+          analyzerMode: "static",
+          openAnalyzer: false,
+        }),
       new ProgressBarPlugin(),
       new FriendlyErrorsWebpackPlugin(),
       new WebpackNotifierPlugin(),

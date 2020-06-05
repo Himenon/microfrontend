@@ -7,9 +7,9 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "cross-env NODE_ENV=production microfrontend-builder --build",
-    "build:dev": "cross-env NODE_ENV=development microfrontend-builder --build",
-    "server": "cross-env NODE_ENV=development microfrontend-builder --server",
+    "build": "cross-env NODE_ENV=production micrforntend-builder --build",
+    "build:dev": "cross-env NODE_ENV=development micrforntend-builder --build",
+    "server": "cross-env NODE_ENV=development micrforntend-builder --server",
     "test": "jest -c jest.config.js"
   },
   "dependencies": {

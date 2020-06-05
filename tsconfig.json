@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "lib": ["es2017", "es2016", "es2015", "es5", "dom"],
     "strict": true,
@@ -22,12 +22,7 @@
     "declaration": true,
     "sourceMap": true,
     "composite": true,
-    "baseUrl": ".",
-    "allowSyntheticDefaultImports": true,
-    "paths": {
-      "@app/*": ["./src/*"]
-    },
-    "outDir": "./cjs"
+    "allowSyntheticDefaultImports": true
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
   "exclude": ["node_modules"]

@@ -6,6 +6,8 @@ export const exec = async (): Promise<void> => {
   const config = generateConfig(isProduction);
   const compiler = webpack(config);
   compiler.run((err) => {
-    console.error(err);
+    if (!!err) {
+      console.error(err);
+    }
   });
 };
