@@ -1,5 +1,5 @@
 {
-  "name": "@himenon/microfrontend-app",
+  "name": "@himenon/microfrontend-tutorial",
   "version": "0.1.0",
   "repository": {
     "type": "git",
@@ -14,7 +14,8 @@
     "prettier": "prettier --config .prettierrc --write src/**/*",
     "publish:site": "ts-node -P ./scripts/tsconfig.cli.json ./scripts/publish.ts",
     "serve": "serve dist",
-    "start": "cross-env NODE_ENV=development ts-node -P ./scripts/tsconfig.cli.json ./scripts/develop.ts"
+    "start": "cross-env NODE_ENV=development ts-node -P ./scripts/tsconfig.cli.json ./scripts/develop.ts",
+    "test": "jest -c jest.config.js"
   },
   "dependencies": {
     "react": "^16.13.1",
