@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
     "lib": ["es2017", "es2016", "es2015", "es5", "dom"],
     "strict": true,
@@ -26,8 +26,9 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@app/*": ["./src/*"]
-    }
+    },
+    "outDir": "./cjs"
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
   "exclude": ["node_modules"]
 }
