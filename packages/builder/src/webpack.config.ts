@@ -170,6 +170,7 @@ export const generateConfig = ({ isProduction }: Props): webpack.Configuration =
         template: path.resolve(__dirname, "../public/index.html"),
         React: isProduction ? "/scripts/react.production.min.js" : "/scripts/react.development.js",
         ReactDOM: isProduction ? "/scripts/react-dom.production.min.js" : "/scripts/react-dom.development.js",
+        MicroComponent: "/scripts/MicroComponent.js",
         meta: {
           description: "micro frontend sample",
         },
@@ -183,6 +184,7 @@ export const generateConfig = ({ isProduction }: Props): webpack.Configuration =
     externals: {
       react: "React",
       "react-dom": "ReactDOM",
+      "@himenon/microfrontend-components": "_External.MicroComponent",
     },
     resolve: {
       extensions: [".js", ".ts", ".tsx", ".scss", ".json"],
