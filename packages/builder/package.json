@@ -11,14 +11,17 @@
     "lib"
   ],
   "scripts": {
-    "build": "yarn clean && yarn tsc:build",
+    "build": "yarn tsc:build",
     "clean": "rimraf lib *.tsbuildinfo",
     "tsc:build": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@types/webpack-bundle-analyzer": "^3.8.0",
     "autoprefixer": "^9.8.0",
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
+    "commander": "^5.1.0",
+    "copy-webpack-plugin": "^6.0.2",
     "core-js": "3",
     "css-loader": "^3.5.3",
     "fibers": "^5.0.0",
@@ -32,6 +35,7 @@
     "postcss-loader": "^3.0.0",
     "progress-bar-webpack-plugin": "^2.1.0",
     "regenerator-runtime": "^0.13.5",
+    "resolve-pkg": "^2.0.0",
     "rimraf": "^3.0.2",
     "sass": "^1.26.7",
     "sass-loader": "^8.0.2",
@@ -45,7 +49,6 @@
     "webpack-notifier": "^1.8.0"
   },
   "devDependencies": {
-    "@types/webpack-bundle-analyzer": "^3.8.0",
-    "commander": "^5.1.0"
+    "@types/friendly-errors-webpack-plugin": "^0.1.2"
   }
 }

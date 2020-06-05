@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import webpack from "webpack";
 import * as path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
@@ -7,17 +8,29 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import CopyPlugin from "copy-webpack-plugin";
+import resolvePkg from "resolve-pkg";
+import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin";
 
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const WebpackNotifierPlugin = require("webpack-notifier");
 const ForkTsCheckerNotifierWebpackPlugin = require("fork-ts-checker-notifier-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
+
+export const find = (searchPath: string): string => {
+  const result = resolvePkg(searchPath);
+  if (result) {
+    return result;
+  }
+  throw new Error(`Not found: ${searchPath}`);
+};
 
 // 実行場所がrootになる
 const rootPath = process.cwd();
 
 const appPath = (nextPath: string) => path.join(rootPath, nextPath);
+
+const pkg = require(appPath("./package.json"));
 
 export const generateConfig = (isProduction: boolean): webpack.Configuration => {
   const isCI = process.env.CI;
@@ -134,22 +147,37 @@ export const generateConfig = (isProduction: boolean): webpack.Configuration => 
         new BundleAnalyzerPlugin({
           analyzerMode: "static",
           openAnalyzer: false,
+          reportFilename: isProduction ? appPath("docs/bundle.prod.html") : appPath("docs/bundle.dev.html"),
         }),
       new ProgressBarPlugin(),
-      new FriendlyErrorsWebpackPlugin(),
+      new FriendlyErrorsWebpackPlugin({
+        clearConsole: false,
+      }),
       new WebpackNotifierPlugin(),
       new ForkTsCheckerWebpackPlugin(),
-      new ForkTsCheckerNotifierWebpackPlugin({ excludeWarnings: true }),
+      new ForkTsCheckerNotifierWebpackPlugin({ excludeWarnings: false }),
       new webpack.HotModuleReplacementPlugin(),
       new CleanWebpackPlugin(),
+      new CopyPlugin({
+        // @ts-ignore
+        patterns: [
+          { to: "scripts", from: find("react-dom/umd/react-dom.production.min.js") },
+          { to: "scripts", from: find("react/umd/react.production.min.js") },
+        ],
+      }),
       isProduction &&
         new MiniCssExtractPlugin({
           filename: "stylesheets/[name].[contenthash:8].css",
           chunkFilename: "stylesheets/[name].[contenthash:8].chunk.css",
         }),
       new HtmlWebpackPlugin({
-        title: isProduction ? "Production" : "Development",
-        template: "public/index.html",
+        title: pkg.name,
+        template: path.resolve(__dirname, "../public/index.html"),
+        React: isProduction ? "/scripts/react.production.min.js" : "/scripts/react.development.js",
+        ReactDOM: isProduction ? "/scripts/react-dom.production.min.js" : "/scripts/react-dom.development.js",
+        meta: {
+          description: "micro frontend sample",
+        },
       }),
       new ManifestPlugin(),
     ].filter(Boolean),
