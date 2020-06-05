@@ -9,7 +9,8 @@ import TerserPlugin from "terser-webpack-plugin";
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import CopyPlugin from "copy-webpack-plugin";
-import resolvePkg from "resolve-pkg";
+import { find, appPath } from "./utils";
+
 import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin";
 
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
@@ -17,28 +18,22 @@ const WebpackNotifierPlugin = require("webpack-notifier");
 const ForkTsCheckerNotifierWebpackPlugin = require("fork-ts-checker-notifier-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
-export const find = (searchPath: string): string => {
-  const result = resolvePkg(searchPath);
-  if (result) {
-    return result;
-  }
-  throw new Error(`Not found: ${searchPath}`);
-};
-
-// 実行場所がrootになる
-const rootPath = process.cwd();
-
-const appPath = (nextPath: string) => path.join(rootPath, nextPath);
-
 const pkg = require(appPath("./package.json"));
 
-export const generateConfig = (isProduction: boolean): webpack.Configuration => {
+export interface Props {
+  isProduction: boolean;
+}
+
+export const generateConfig = ({ isProduction }: Props): webpack.Configuration => {
   const isCI = process.env.CI;
   const tsLoader: webpack.RuleSetUse = {
     loader: "ts-loader",
     options: {
       configFile: appPath("tsconfig.json"),
       transpileOnly: true,
+      compilerOptions: {
+        module: "commonjs",
+      },
     },
   };
 

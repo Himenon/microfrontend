@@ -2,7 +2,9 @@ lib/
 module/
 build/
 dist/
+umd/
 packages/**/docs
+
 
 # Created by https://www.gitignore.io/api/node
 # Edit at https://www.gitignore.io/?templates=node

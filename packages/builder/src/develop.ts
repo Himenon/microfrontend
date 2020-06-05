@@ -1,11 +1,11 @@
 import express from "express";
 import webpack from "webpack";
-import { generateConfig, find } from "./webpack.config";
+import { generateConfig, Props } from "./webpack.config";
+import { find } from "./utils";
 import webpackDevServer from "webpack-dev-server";
 
-export const exec = async (): Promise<void> => {
-  const isProduction = process.env.NODE_ENV === "production";
-  const config = generateConfig(isProduction);
+export const exec = async (props: Props): Promise<void> => {
+  const config = generateConfig(props);
   const compiler = webpack(config);
   const server = new webpackDevServer(compiler, {
     hot: true,

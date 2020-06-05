@@ -1,5 +1,5 @@
 import webpack from "webpack";
-import { generateConfig, Props } from "./webpack.config";
+import { generateConfig, Props } from "./webpack.library.config";
 
 export const exec = async (props: Props): Promise<void> => {
   const config = generateConfig(props);
