@@ -8,6 +8,7 @@ export interface CLIArguments {
   build: boolean;
   server: boolean;
   libraryName?: string;
+  alias2: boolean;
 }
 
 export const validateCliArguments = (args: commander.Command): CLIArguments => {
@@ -15,6 +16,7 @@ export const validateCliArguments = (args: commander.Command): CLIArguments => {
     build: !!args["build"],
     server: !!args["server"],
     libraryName: args["library"],
+    alias2: !!args["alias2"],
   };
 };
 
@@ -24,6 +26,7 @@ export const executeCommandLine = (): CLIArguments => {
     .option("-b --build", "build flag")
     .option("-s --server", "server flag")
     .option("-lib --library [name]", "browser library name")
+    .option("--alias2", "use alias")
     .parse(process.argv);
   return validateCliArguments(commander);
 };

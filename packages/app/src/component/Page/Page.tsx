@@ -1,4 +1,5 @@
 import * as React from "react";
+import {} from "@himenon/microfrontend-tutorial";
 
 const styles = require("./page.scss");
 

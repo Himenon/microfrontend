@@ -1,6 +1,10 @@
 import webpack from "webpack";
 import { appPath } from "./utils";
 
+import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin";
+
+const WebpackNotifierPlugin = require("webpack-notifier");
+
 export interface Props {
   isProduction: boolean;
   libraryName: string;
@@ -22,7 +26,6 @@ export const generateConfig = ({ isProduction, libraryName }: Props): webpack.Co
       presets: ["@babel/preset-env"],
     },
   };
-
   return {
     mode: isProduction ? "production" : "development",
     target: "web",
@@ -40,8 +43,14 @@ export const generateConfig = ({ isProduction, libraryName }: Props): webpack.Co
       react: "React", // 必須
       "react-dom": "ReactDOM", // 必須
     },
+    plugins: [
+      new FriendlyErrorsWebpackPlugin({
+        clearConsole: false,
+      }),
+      new WebpackNotifierPlugin(),
+    ].filter(Boolean),
     resolve: {
-      extensions: [".ts", ".tsx", ".js"],
+      extensions: [".js", ".ts", ".tsx", ".scss", ".json"],
     },
     module: {
       rules: [
