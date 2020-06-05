@@ -32,11 +32,11 @@ const main = async () => {
   const args = executeCommandLine();
   const isProduction = process.env.NODE_ENV === "production";
   if (!args.libraryName && args.build) {
-    await build.exec({ isProduction });
+    await build.exec({ isProduction, isDevServer: false });
   } else if (args.libraryName && args.build) {
     await buildLib.exec({ isProduction, libraryName: args.libraryName });
   } else if (args.server) {
-    await server.exec({ isProduction });
+    await server.exec({ isProduction, isDevServer: true });
   }
 };
 

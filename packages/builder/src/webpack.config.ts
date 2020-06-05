@@ -22,9 +22,10 @@ const pkg = require(appPath("./package.json"));
 
 export interface Props {
   isProduction: boolean;
+  isDevServer: boolean;
 }
 
-export const generateConfig = ({ isProduction }: Props): webpack.Configuration => {
+export const generateConfig = ({ isProduction, isDevServer }: Props): webpack.Configuration => {
   const isCI = process.env.CI;
   const tsLoader: webpack.RuleSetUse = {
     loader: "ts-loader",
@@ -130,7 +131,7 @@ export const generateConfig = ({ isProduction }: Props): webpack.Configuration =
       },
     },
     entry: {
-      application: ["core-js", "regenerator-runtime/runtime", "./src/index.tsx"],
+      application: ["core-js", "regenerator-runtime/runtime", isDevServer ? "./src/client.tsx" : "./src/index.tsx"],
     },
     devtool: "cheap-source-map",
     devServer: {
