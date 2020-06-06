@@ -7,7 +7,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "cross-env NODE_ENV=production micrforntend-builder --build --library Tutorial --alias2",
+    "build": "cross-env NODE_ENV=production micrforntend-builder --build --library Tutorial --add",
     "build:dev": "cross-env NODE_ENV=development micrforntend-builder --build",
     "clean": "rimraf dist *.tsbuildinfo",
     "server": "cross-env NODE_ENV=development micrforntend-builder --server",

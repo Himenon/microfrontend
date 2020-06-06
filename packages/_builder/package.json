@@ -24,6 +24,7 @@
     "copy-webpack-plugin": "^6.0.2",
     "core-js": "3",
     "css-loader": "^3.5.3",
+    "dts-bundle": "^0.7.3",
     "fibers": "^5.0.0",
     "fork-ts-checker-notifier-webpack-plugin": "^2.0.0",
     "fork-ts-checker-webpack-plugin": "^4.1.6",

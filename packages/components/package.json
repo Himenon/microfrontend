@@ -7,10 +7,12 @@
   },
   "license": "MIT",
   "main": "./umd/MicroComponent.js",
+  "types": "./index.d.ts",
   "scripts": {
-    "build": "cross-env NODE_ENV=production micrforntend-builder --build --library MicroComponent && yarn tsc:build",
+    "build": "cross-env NODE_ENV=production micrforntend-builder --build --library MicroComponent && yarn tsc:build && yarn dts:build",
     "build:dev": "cross-env NODE_ENV=development micrforntend-builder --build",
     "clean": "rimraf module umd dist *.tsbuildinfo",
+    "dts:build": "micrforntend-builder --dts-bundle",
     "server": "cross-env NODE_ENV=development micrforntend-builder --server",
     "test": "jest -c jest.config.js",
     "tsc:build": "tsc -b tsconfig.module.json"

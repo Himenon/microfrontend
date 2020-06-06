@@ -4,7 +4,7 @@ build/
 dist/
 umd/
 packages/**/docs
-
+packages/**/index.d.ts
 
 # Created by https://www.gitignore.io/api/node
 # Edit at https://www.gitignore.io/?templates=node

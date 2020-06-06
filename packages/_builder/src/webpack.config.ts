@@ -9,7 +9,7 @@ import TerserPlugin from "terser-webpack-plugin";
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import CopyPlugin from "copy-webpack-plugin";
-import { find, appPath } from "./utils";
+import { find, appPath, pkg } from "./utils";
 
 import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin";
 
@@ -17,8 +17,6 @@ const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const WebpackNotifierPlugin = require("webpack-notifier");
 const ForkTsCheckerNotifierWebpackPlugin = require("fork-ts-checker-notifier-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-
-const pkg = require(appPath("./package.json"));
 
 export interface Props {
   isProduction: boolean;
@@ -180,12 +178,12 @@ export const generateConfig = ({ isProduction, isDevServer }: Props): webpack.Co
     ].filter(Boolean),
     output: {
       filename: "scripts/[name].bundle.js",
+      chunkFilename: "scripts/[name].chunk.js",
       path: appPath("./dist"),
     },
     externals: {
       react: "React",
       "react-dom": "ReactDOM",
-      "@himenon/microfrontend-components": "_External.MicroComponent",
     },
     resolve: {
       extensions: [".js", ".ts", ".tsx", ".scss", ".json"],
