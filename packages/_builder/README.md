@@ -2,7 +2,18 @@
 
 ビルド用CLI
 
-## 予約ファイル・予約ディレクトリ
+## 予約された名前と構造
+
+### 予約済みの変数
+
+ライブラリとしてビルドされた成果物をブラウザで読み込むと、`window._External`の名前空間の直下にマージされます。
+
+```js
+window._External["lib1"] // lib1という名前のライブラリアクセス
+window._External["lib2"] // lib2という名前のライブラリアクセス
+```
+
+### 予約済みのファイル・ディレクトリ構造
 
 ```
 ├── dist
@@ -29,13 +40,17 @@
   * 1つのJavaScriptファイルになります。
   * `dist/[LibName].js`に出力されます
   * `index.d.ts`に型定義ファイルが出力されます
+  * 成果物を読み込むと、`window._External[libName]`に生成されます
+  * cssも一緒にバンドルされます
 * **特徴**
   * アプリケーションに組み込まれる前提の生成を行っています
+  * 遅延読み込みの対象として扱うため、SSRを前提とした作りではありません
+  * SSRの対象にしないでください
 
 ### アプリケーション用ビルドの例
 
-* **成果物**: Code Splitされます。
-* 
+* **成果物**
+  * コード分割されます
 
 ```bash
 micrforntend-builder
@@ -46,8 +61,7 @@ micrforntend-builder
 
 ## webpack-dev-server
 
-* ライブラリ用ビルド
-* アプリケーション用ビルド
+`--build`フラグを`--dev-server`に変換するだけで利用可能です。
 
 ```bash
 micrforntend-builder
