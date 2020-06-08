@@ -18,7 +18,6 @@ export const reducer = (state: State, action: ActionTypes): State => {
 
 export type Reducer = [typeof reducer, State];
 
-export const createReducer = (state: State = DEFAULT_STATE): Reducer => {
-  const value = repository.getItem<number>(Constants.STORE_COUNT_KEY);
-  return [reducer, { ...state, value: value || state.value }];
+export const createReducer = (state: Partial<State>): Reducer => {
+  return [reducer, { ...DEFAULT_STATE, ...state }];
 };

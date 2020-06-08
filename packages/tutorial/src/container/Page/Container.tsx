@@ -7,18 +7,21 @@ const generateProps = (stores: Domain.Stores, store: Store): Page.Props => {
   return {
     panel: {
       title: {
-        children: "こんにちは",
+        children: store.title,
       },
       body: {
         children: `Counter ${stores.app.state.value}`,
       },
     },
     button: {
-      onClick: () => {
+      onClick: async () => {
         stores.app.dispatch({
           type: "UPDATE_COUNT",
           value: stores.app.state.value + 1,
         });
+        if (stores.app.state.onClick) {
+          await stores.app.state.onClick();
+        }
       },
       children: "Count up",
     },

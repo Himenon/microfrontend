@@ -4,7 +4,14 @@ import * as React from "react";
 import { generateStore, Store } from "./Store";
 
 const generateProps = (stores: Domain.Stores, store: Store): Page.Props => {
-  return {};
+  return {
+    tutorial: {
+      areaTitle: "Tutorial Title",
+      onClick: async () => {
+        stores.app.dispatch({ type: "UPDATE_COUNT", value: stores.app.state.value + 10 });
+      },
+    },
+  };
 };
 
 export const Container = ({ reducers }: { reducers: Domain.Reducers }): React.ReactElement => {

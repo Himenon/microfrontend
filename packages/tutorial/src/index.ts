@@ -1,1 +1,1 @@
-export { run } from "./client";
+export { run, Props } from "./client";

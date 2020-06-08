@@ -12,8 +12,8 @@ export interface Stores {
   };
 }
 
-export const createReducers = (): Reducers => {
+export const createReducers = ({ app }: { app: Partial<App.State> }): Reducers => {
   return {
-    app: App.createReducer(),
+    app: App.createReducer(app),
   };
 };
