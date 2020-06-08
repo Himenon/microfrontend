@@ -99,7 +99,7 @@ const main = async () => {
   if (!args.build) {
     if (args.devServer) {
       if (args.libraryName) {
-        await server.exec1({
+        await server.externalApp({
           isProduction,
           libraryName: args.libraryName,
           isDevServer: true,
@@ -127,24 +127,18 @@ const main = async () => {
     return;
   }
 
-  if (args.externalAssets) {
-    if (args.libraryName) {
-      await build.externalApp({
-        isProduction,
-        libraryName: args.libraryName,
-        isDevServer: false,
-        splitChunks: false,
-        externalAssets,
-        extractCss: false,
-      });
-      return;
-    }
-  }
-
   if (args.libraryName) {
-    await build.library({ isProduction, libraryName: args.libraryName });
+    await build.externalApp({
+      isProduction,
+      libraryName: args.libraryName,
+      isDevServer: false,
+      splitChunks: false,
+      externalAssets,
+      extractCss: false,
+    });
     return;
   }
+
 };
 
 main().catch((error) => {

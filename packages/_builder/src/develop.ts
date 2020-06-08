@@ -4,7 +4,7 @@ import * as ConfigFactory from "./configFactory";
 import { find } from "./utils";
 import webpackDevServer from "webpack-dev-server";
 
-export const exec1 = async (props: ConfigFactory.ExternalAppProps): Promise<void> => {
+export const externalApp = async (props: ConfigFactory.ExternalAppProps): Promise<void> => {
   const config = ConfigFactory.generateExternalAppConfig(props);
   const compiler = webpack(config);
   const server = new webpackDevServer(compiler, {

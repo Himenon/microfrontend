@@ -1,6 +1,5 @@
 import webpack from "webpack";
-import * as Base from "./webpack.base.config";
-import * as Lib from "./webpack.lib.config";
+import * as Base from "./webpack.config";
 import * as ConfigFactory from "./configFactory";
 
 export type ExternalAsset = ConfigFactory.ExternalAsset;
@@ -13,8 +12,8 @@ export const exec = async (props: Base.Props): Promise<void> => {
   });
 };
 
-export const library = async (props: Lib.Props): Promise<void> => {
-  const config = Lib.generateConfig(props);
+export const library = async (props: ConfigFactory.ExternalAppProps): Promise<void> => {
+  const config = ConfigFactory.generateExternalAppConfig(props);
   const compiler = webpack(config);
   compiler.run((err) => {
     console.error(err);

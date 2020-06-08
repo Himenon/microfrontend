@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as webpack from "webpack";
-import * as Base from "./webpack.base.config";
+import * as Base from "./webpack.config";
 import CopyPlugin from "copy-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { appPath, pkg, find } from "./utils";
