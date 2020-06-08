@@ -135,7 +135,7 @@ export const generateConfig = ({
       },
     },
     entry: {
-      application: ["core-js", "regenerator-runtime/runtime", isDevServer ? "./src/client.tsx" : "./src/index.tsx"],
+      application: ["core-js", "regenerator-runtime/runtime", isDevServer ? "./src/DebugServer.tsx" : "./src/index.ts"],
     },
     devtool: "cheap-source-map",
     devServer: {

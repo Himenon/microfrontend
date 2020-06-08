@@ -10,12 +10,11 @@ export interface ExternalAsset {
   libName: string; // MicroComponent
 }
 
-export interface Props extends Base.Props {
-  libraryName: string;
+export interface OverrideProps extends Base.Props {
   externalAssets: ExternalAsset[];
 }
 
-export const generateConfig = ({ libraryName, externalAssets, ...props }: Props): webpack.Configuration => {
+export const getOverrideConfig = ({ externalAssets, ...props }: OverrideProps): webpack.Configuration => {
   const plugins: webpack.Plugin[] = [
     new CopyPlugin({
       // @ts-ignore
@@ -61,8 +60,17 @@ export const generateConfig = ({ libraryName, externalAssets, ...props }: Props)
       }, {}),
     };
   }
+  return config;
+}
+
+export interface ExternalAppProps extends OverrideProps {
+  libraryName: string;
+}
+
+export const generateExternalAppConfig = (props: ExternalAppProps): webpack.Configuration => {
+  const config = getOverrideConfig(props);
   config.entry = {
-    [libraryName]: "./src/index.ts",
+    [props.libraryName]: "./src/index.ts",
   };
   config.output = {
     path: appPath("dist"),
@@ -70,5 +78,12 @@ export const generateConfig = ({ libraryName, externalAssets, ...props }: Props)
     library: ["_External", "[name]"], // externalsのvalueの値になる
     // libraryTarget: "umd", // 指定すると、webpackビルド時に_Externalを参照しなくなる
   };
+  return config;
+};
+
+export type AppProps = OverrideProps;
+
+export const generateAppConfig = (props: AppProps): webpack.Configuration => {
+  const config =  getOverrideConfig(props);
   return config;
 };

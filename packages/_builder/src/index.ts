@@ -37,7 +37,9 @@ export const validateCliArguments = (args: commander.Command): CLIArguments => {
   }
   const typeofExternalAssets = typeof args["externalAssets"];
   if (!["undefined", "string"].includes(typeofExternalAssets)) {
-    throw new Error(`--external-assetsの指定形式が異なります. Input Value: ${JSON.stringify(args["externalAssets"])}. Typeof: ${typeofExternalAssets}`);
+    throw new Error(
+      `--external-assetsの指定形式が異なります. Input Value: ${JSON.stringify(args["externalAssets"])}. Typeof: ${typeofExternalAssets}`,
+    );
   }
   const typeofLibrary = typeof args["library"];
   if (!["undefined", "string"].includes(typeofLibrary)) {
@@ -57,7 +59,10 @@ export const validateCliArguments = (args: commander.Command): CLIArguments => {
  *
  * @param inputText "pkgName1:libName1,pkgName2:libName2"
  */
-export const parseExternalAssets = (inputText: string): build.ExternalAsset[] => {
+export const parseExternalAssets = (inputText: string | undefined): build.ExternalAsset[] => {
+  if (!inputText) {
+    return [];
+  }
   // ["pkgName1:libName1", "pkgName2:libName2"]
   const list: string[] = inputText.split(",");
   return list.map((t) => {
@@ -98,7 +103,7 @@ const main = async () => {
   }
 
   if (args.app) {
-    await build.exec4({ isProduction, isDevServer: false, splitChunks: true });
+    await build.exec4({ isProduction, isDevServer: false, splitChunks: true, extractCss: true, externalAssets: parseExternalAssets(args.externalAssets), });
     return;
   }
 
@@ -110,6 +115,7 @@ const main = async () => {
         isDevServer: false,
         splitChunks: false,
         externalAssets: parseExternalAssets(args.externalAssets),
+        extractCss: false,
       });
       return;
     }
