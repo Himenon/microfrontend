@@ -8,9 +8,10 @@
   "license": "MIT",
   "scripts": {
     "build": "cross-env NODE_ENV=production yarn webpack:build",
-    "webpack:build": "micrforntend-builder --build --app --external-assets '@himenon/microfrontend-components:MicroComponent,@himenon/microfrontend-tutorial:Tutorial'",    
+    "webpack:build": "micrforntend-builder --build --app --external-assets '@himenon/microfrontend-components:MicroComponent,@himenon/microfrontend-tutorial:Tutorial'",
+    "webpack:server": "micrforntend-builder --dev-server --app --external-assets '@himenon/microfrontend-components:MicroComponent,@himenon/microfrontend-tutorial:Tutorial'",
     "clean": "rimraf index.d.ts docs coverage module umd dist *.tsbuildinfo",
-    "server": "cross-env NODE_ENV=development micrforntend-builder --server",
+    "server": "cross-env NODE_ENV=development yarn webpack:server",
     "test": "jest -c jest.config.js"
   },
   "dependencies": {

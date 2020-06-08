@@ -29,7 +29,7 @@ export const externalApp = async (props: ConfigFactory.ExternalAppProps): Promis
   });
 };
 
-export const exec4 = async (props: ConfigFactory.AppProps): Promise<void> => {
+export const app = async (props: ConfigFactory.AppProps): Promise<void> => {
   const config = ConfigFactory.generateAppConfig(props);
   const compiler = webpack(config);
   compiler.run((err) => {

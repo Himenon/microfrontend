@@ -109,11 +109,21 @@ const main = async () => {
         });
         return;
       }
+      if (args.app) {
+        await server.app({
+          isProduction,
+          isDevServer: true,
+          splitChunks: true,
+          extractCss: true,
+          externalAssets,
+        });
+        return;
+      }
     }
   }
 
   if (args.app) {
-    await build.exec4({ isProduction, isDevServer: false, splitChunks: true, extractCss: true, externalAssets });
+    await build.app({ isProduction, isDevServer: false, splitChunks: true, extractCss: true, externalAssets });
     return;
   }
 
