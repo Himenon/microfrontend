@@ -1,3 +1,3 @@
 "use strict";
 
-module.exports = require("./umd/Tutorial");
+module.exports = require("./dist/Tutorial");

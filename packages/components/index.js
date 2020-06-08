@@ -1,3 +1,3 @@
 "use strict";
 
-module.exports = require("./umd/MicroComponent");
+module.exports = require("./dist/MicroComponent");

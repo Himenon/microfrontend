@@ -15,7 +15,7 @@ export const exec = async (props: Props): Promise<void> => {
     before: (app: express.Application, _server: any) => {
       app.use("/scripts/react.development.js", express.static(find("react/umd/react.development.js")));
       app.use("/scripts/react-dom.development.js", express.static(find("react-dom/umd/react-dom.development.js")));
-      app.use("/scripts/MicroComponent.js", express.static(find("@himenon/microfrontend-components/umd/MicroComponent.js")));
+      app.use("/scripts/MicroComponent.js", express.static(find("@himenon/microfrontend-components/dist/MicroComponent.js")));
     },
   });
   server.listen(9000);

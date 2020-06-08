@@ -19,7 +19,7 @@ export const generateConfig = ({ libraryName, ...props }: Props): webpack.Config
       patterns: [
         { to: "scripts", from: find("react-dom/umd/react-dom.production.min.js") },
         { to: "scripts", from: find("react/umd/react.production.min.js") },
-        { to: "scripts", from: find("@himenon/microfrontend-components/umd/MicroComponent.js") },
+        { to: "scripts", from: find("@himenon/microfrontend-components/dist/MicroComponent.js") },
       ],
     }),
     new HtmlWebpackPlugin({
@@ -41,12 +41,11 @@ export const generateConfig = ({ libraryName, ...props }: Props): webpack.Config
       "@himenon/microfrontend-components": "_External.MicroComponent",
     };
   }
-  console.log(config.externals);
   config.entry = {
     [libraryName]: "./src/index.ts",
   };
   config.output = {
-    path: appPath("umd"),
+    path: appPath("dist"),
     filename: "[name].js",
     library: ["_External", "[name]"], // externalsのvalueの値になる
     // libraryTarget: "umd", // 指定すると、webpackビルド時に_Externalを参照しなくなる

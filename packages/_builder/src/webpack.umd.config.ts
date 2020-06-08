@@ -19,7 +19,7 @@ export const generateConfig = ({ isProduction, libraryName }: Props): webpack.Co
     },
   };
 
-  console.log(`LibName = _External.${libraryName}`);
+  console.log(`ExternalLibraryName = _External.${libraryName}`);
 
   const babelLoader: webpack.RuleSetUse = {
     loader: "babel-loader",
@@ -35,7 +35,7 @@ export const generateConfig = ({ isProduction, libraryName }: Props): webpack.Co
       [libraryName]: "./src/index.ts",
     },
     output: {
-      path: appPath("umd"),
+      path: appPath("dist"),
       filename: "[name].js",
       // https://github.com/webpack/webpack/tree/master/examples/multi-part-library#webpackconfigjs
       library: ["_External", "[name]"], // externalsのvalueの値になる

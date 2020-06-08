@@ -7,8 +7,12 @@
   },
   "license": "MIT",
   "main": "./index.js",
-  "module": "./module/index.js",
   "types": "./index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "dist"
+  ],
   "scripts": {
     "build": "cross-env NODE_ENV=production micrforntend-builder --build --library Tutorial --add && yarn tsc:build && yarn dts:build",
     "build:dev": "cross-env NODE_ENV=development micrforntend-builder --build",

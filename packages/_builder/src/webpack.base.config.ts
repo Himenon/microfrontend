@@ -181,7 +181,6 @@ export const generateConfig = ({
         "@app/container": appPath("./src/container/index.ts"),
         "@app/domain": appPath("./src/domain/index.ts"),
         "@app/infra": appPath("./src/infra/index.ts"),
-        "@app/style": appPath("./src/style/index.ts"),
       },
     },
     module: {

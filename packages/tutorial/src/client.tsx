@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { AppRouter } from "./router";
+import * as Domain from "./domain";
+import { Page } from "./container";
 
-const initialize = () => {
-  ReactDOM.render(<AppRouter />, document.getElementById("root"));
+export const run = (container: Element): void => {
+  const reducers = Domain.createReducers();
+  ReactDOM.render(<Page.Container reducers={reducers} />, container);
 };
-
-initialize();

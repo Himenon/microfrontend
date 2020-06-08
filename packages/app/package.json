@@ -9,7 +9,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production micrforntend-builder --build --root",
     "build:dev": "cross-env NODE_ENV=development micrforntend-builder --build",
-    "clean": "rimraf dist coverage",
+    "clean": "rimraf index.d.ts docs coverage module umd dist *.tsbuildinfo",
     "server": "cross-env NODE_ENV=development micrforntend-builder --server",
     "test": "jest -c jest.config.js"
   },

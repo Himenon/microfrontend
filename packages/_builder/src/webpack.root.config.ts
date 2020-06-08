@@ -14,8 +14,8 @@ export const generateConfig = ({ ...props }: Props): webpack.Configuration => {
       patterns: [
         { to: "scripts", from: find("react-dom/umd/react-dom.production.min.js") },
         { to: "scripts", from: find("react/umd/react.production.min.js") },
-        { to: "scripts", from: find("@himenon/microfrontend-components/umd/MicroComponent.js") },
-        { to: "scripts", from: find("@himenon/microfrontend-tutorial/umd/Tutorial.js") },
+        { to: "scripts", from: find("@himenon/microfrontend-components/dist/MicroComponent.js") },
+        { to: "scripts", from: find("@himenon/microfrontend-tutorial/dist/Tutorial.js") },
       ],
     }),
     new HtmlWebpackPlugin({
@@ -43,6 +43,5 @@ export const generateConfig = ({ ...props }: Props): webpack.Configuration => {
       "@himenon/microfrontend-tutorial": "_External.Tutorial",
     };
   }
-  console.log(config.externals);
   return config;
 };

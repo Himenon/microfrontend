@@ -54,6 +54,7 @@ const main = async () => {
 
   if (args.root) {
     await build.exec4({ isProduction, isDevServer: false, splitChunks: true });
+    return;
   }
 
   if (args.add) {
