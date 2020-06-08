@@ -1,11 +1,11 @@
 import express from "express";
 import webpack from "webpack";
-import { generateConfig, Props } from "./webpack.base.config";
+import * as ConfigFactory from "./configFactory";
 import { find } from "./utils";
 import webpackDevServer from "webpack-dev-server";
 
-export const exec = async (props: Props): Promise<void> => {
-  const config = generateConfig(props);
+export const exec1 = async (props: ConfigFactory.ExternalAppProps): Promise<void> => {
+  const config = ConfigFactory.generateExternalAppConfig(props);
   const compiler = webpack(config);
   const server = new webpackDevServer(compiler, {
     hot: true,
@@ -15,7 +15,9 @@ export const exec = async (props: Props): Promise<void> => {
     before: (app: express.Application, _server: any) => {
       app.use("/scripts/react.development.js", express.static(find("react/umd/react.development.js")));
       app.use("/scripts/react-dom.development.js", express.static(find("react-dom/umd/react-dom.development.js")));
-      app.use("/scripts/MicroComponent.js", express.static(find("@himenon/microfrontend-components/dist/MicroComponent.js")));
+      props.externalAssets.forEach(externalAsset => {
+        app.use(`/scripts/${externalAsset.libName}.js`, express.static(find(`${externalAsset.pkgName}/dist/${externalAsset.libName}.js`)));
+      })
     },
   });
   server.listen(9000);

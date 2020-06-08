@@ -70,15 +70,17 @@ export interface ExternalAppProps extends OverrideProps {
 
 export const generateExternalAppConfig = (props: ExternalAppProps): webpack.Configuration => {
   const config = getOverrideConfig(props);
-  config.entry = {
-    [props.libraryName]: ENTRY_FILE,
-  };
-  config.output = {
-    path: appPath("dist"),
-    filename: "[name].js",
-    library: ["_External", "[name]"], // externalsのvalueの値になる
-    // libraryTarget: "umd", // 指定すると、webpackビルド時に_Externalを参照しなくなる
-  };
+  if (!props.isDevServer) {
+    config.entry = {
+      [props.libraryName]: ENTRY_FILE,
+    };
+    config.output = {
+      path: appPath("dist"),
+      filename: "[name].js",
+      library: ["_External", "[name]"], // externalsのvalueの値になる
+      // libraryTarget: "umd", // 指定すると、webpackビルド時に_Externalを参照しなくなる
+    };
+  }
   return config;
 };
 

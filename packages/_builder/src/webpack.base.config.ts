@@ -194,7 +194,7 @@ export const generateConfig = ({
         },
         {
           test: /\.scss$/,
-          loaders: [(extractCss || undefined) && (isProduction ? MiniCssExtractPlugin.loader : "style-loader"), ...cssLoaders].filter(
+          loaders: [(extractCss || undefined) && (!isDevServer ? MiniCssExtractPlugin.loader : "style-loader"), ...cssLoaders].filter(
             Boolean,
           ) as webpack.RuleSetUse,
         },

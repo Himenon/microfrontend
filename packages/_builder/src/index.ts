@@ -90,6 +90,7 @@ export const executeCommandLine = (): CLIArguments => {
 const main = async () => {
   const args = executeCommandLine();
   const isProduction = process.env.NODE_ENV === "production";
+  const externalAssets = parseExternalAssets(args.externalAssets);
   if (args.dtsBundle) {
     dtsBundle.exec();
     return;
@@ -97,13 +98,22 @@ const main = async () => {
 
   if (!args.build) {
     if (args.devServer) {
-      await server.exec({ isProduction, isDevServer: true, splitChunks: false });
-      return;
+      if (args.libraryName) {
+        await server.exec1({
+          isProduction,
+          libraryName: args.libraryName,
+          isDevServer: true,
+          splitChunks: false,
+          extractCss: false,
+          externalAssets,
+        });
+        return;
+      }
     }
   }
 
   if (args.app) {
-    await build.exec4({ isProduction, isDevServer: false, splitChunks: true, extractCss: true, externalAssets: parseExternalAssets(args.externalAssets), });
+    await build.exec4({ isProduction, isDevServer: false, splitChunks: true, extractCss: true, externalAssets });
     return;
   }
 
@@ -114,7 +124,7 @@ const main = async () => {
         libraryName: args.libraryName,
         isDevServer: false,
         splitChunks: false,
-        externalAssets: parseExternalAssets(args.externalAssets),
+        externalAssets,
         extractCss: false,
       });
       return;
