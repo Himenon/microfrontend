@@ -1,14 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import webpack from "webpack";
-import HtmlWebpackPlugin from "html-webpack-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import ManifestPlugin from "webpack-manifest-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
-import CopyPlugin from "copy-webpack-plugin";
-import { find, appPath, pkg } from "./utils";
+import { appPath } from "./utils";
 
 import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin";
 
@@ -20,10 +18,18 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 export interface Props {
   isProduction: boolean;
   isDevServer: boolean;
-  htmlWebpackPlugin?: { [key: string]: string };
+  splitChunks: boolean;
+  plugins?: webpack.Plugin[];
+  extractCss?: boolean;
 }
 
-export const generateConfig = ({ isProduction, isDevServer, htmlWebpackPlugin = {} }: Props): webpack.Configuration => {
+export const generateConfig = ({
+  isProduction,
+  isDevServer,
+  splitChunks = false,
+  extractCss = false,
+  plugins = [],
+}: Props): webpack.Configuration => {
   const isCI = process.env.CI;
   const tsLoader: webpack.RuleSetUse = {
     loader: "ts-loader",
@@ -80,7 +86,7 @@ export const generateConfig = ({ isProduction, isDevServer, htmlWebpackPlugin = 
     mode: isProduction ? "production" : "development",
     target: "web",
     optimization: {
-      minimize: isProduction,
+      minimize: false,
       runtimeChunk: false,
       minimizer: [
         new TerserPlugin({
@@ -99,7 +105,7 @@ export const generateConfig = ({ isProduction, isDevServer, htmlWebpackPlugin = 
           canPrint: true,
         }),
       ],
-      splitChunks: {
+      splitChunks: (splitChunks || undefined) && {
         chunks: "initial",
         cacheGroups: {
           default: false,
@@ -152,29 +158,14 @@ export const generateConfig = ({ isProduction, isDevServer, htmlWebpackPlugin = 
       new ForkTsCheckerNotifierWebpackPlugin({ excludeWarnings: false }),
       new webpack.HotModuleReplacementPlugin(),
       new CleanWebpackPlugin(),
-      new CopyPlugin({
-        // @ts-ignore
-        patterns: [
-          { to: "scripts", from: find("react-dom/umd/react-dom.production.min.js") },
-          { to: "scripts", from: find("react/umd/react.production.min.js") },
-        ],
-      }),
       isProduction &&
+        extractCss &&
         new MiniCssExtractPlugin({
           filename: "stylesheets/[name].[contenthash:8].css",
           chunkFilename: "stylesheets/[name].[contenthash:8].chunk.css",
         }),
-      new HtmlWebpackPlugin({
-        title: pkg.name,
-        template: appPath("./public/index.html"),
-        React: isProduction ? "/scripts/react.production.min.js" : "/scripts/react.development.js",
-        ReactDOM: isProduction ? "/scripts/react-dom.production.min.js" : "/scripts/react-dom.development.js",
-        ...htmlWebpackPlugin,
-        meta: {
-          description: "micro frontend sample",
-        },
-      }),
       new ManifestPlugin(),
+      ...plugins,
     ].filter(Boolean),
     output: {
       filename: "scripts/[name].bundle.js",
@@ -206,7 +197,9 @@ export const generateConfig = ({ isProduction, isDevServer, htmlWebpackPlugin = 
         },
         {
           test: /\.scss$/,
-          loaders: [isProduction ? MiniCssExtractPlugin.loader : "style-loader", ...cssLoaders].filter(Boolean) as webpack.RuleSetUse,
+          loaders: [(extractCss || undefined) && (isProduction ? MiniCssExtractPlugin.loader : "style-loader"), ...cssLoaders].filter(
+            Boolean,
+          ) as webpack.RuleSetUse,
         },
         {
           test: /\.js$/,

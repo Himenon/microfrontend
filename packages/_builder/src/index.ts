@@ -47,18 +47,18 @@ const main = async () => {
 
   if (!args.build) {
     if (args.server) {
-      await server.exec({ isProduction, isDevServer: true });
+      await server.exec({ isProduction, isDevServer: true, splitChunks: false });
       return;
     }
   }
 
   if (args.root) {
-    await build.exec4({ isProduction, isDevServer: false });
+    await build.exec4({ isProduction, isDevServer: false, splitChunks: true });
   }
 
   if (args.add) {
     if (args.libraryName) {
-      await build.exec3({ isProduction, libraryName: args.libraryName, isDevServer: false });
+      await build.exec3({ isProduction, libraryName: args.libraryName, isDevServer: false, splitChunks: false });
       return;
     }
   }
@@ -69,7 +69,7 @@ const main = async () => {
   }
 
   if (args.build) {
-    await build.exec({ isProduction, isDevServer: false });
+    await build.exec({ isProduction, isDevServer: false, splitChunks: true });
     return;
   }
 };

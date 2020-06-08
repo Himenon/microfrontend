@@ -1,6 +1,6 @@
 import express from "express";
 import webpack from "webpack";
-import { generateConfig, Props } from "./webpack.config";
+import { generateConfig, Props } from "./webpack.base.config";
 import { find } from "./utils";
 import webpackDevServer from "webpack-dev-server";
 
