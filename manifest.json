@@ -1,0 +1,14 @@
+{
+  "application.js": "scripts/application.bundle.js",
+  "styles.css": "stylesheets/styles.d26bec8b.chunk.css",
+  "styles.js": "scripts/styles.chunk.js",
+  "styles.css.map": "stylesheets/styles.d26bec8b.chunk.css.map",
+  "vendor.js": "scripts/vendor.chunk.js",
+  "vendor.js.map": "scripts/vendor.chunk.js.map",
+  "index.html": "index.html",
+  "scripts/MicroComponent.js": "scripts/MicroComponent.js",
+  "scripts/Tutorial.js": "scripts/Tutorial.js",
+  "scripts/react-dom.production.min.js": "scripts/react-dom.production.min.js",
+  "scripts/react.production.min.js": "scripts/react.production.min.js",
+  "scripts/vendor.chunk.js.LICENSE.txt": "scripts/vendor.chunk.js.LICENSE.txt"
+}
