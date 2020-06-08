@@ -20,7 +20,7 @@ const generateProps = (stores: Domain.Stores, store: Store): Page.Props => {
           value: stores.app.state.value + 1,
         });
         if (stores.app.state.onClick) {
-          await stores.app.state.onClick();
+          stores.app.state.onClick();
         }
       },
       children: "Count up",

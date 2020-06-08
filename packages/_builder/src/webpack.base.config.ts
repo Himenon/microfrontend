@@ -6,7 +6,7 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
-import { appPath } from "./utils";
+import { appPath, builderRoot } from './utils';
 
 import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin";
 
@@ -46,6 +46,7 @@ export const generateConfig = ({
     options: {
       cacheDirectory: true,
       presets: ["@babel/preset-env"],
+      babelrcRoots: builderRoot,
     },
   };
 

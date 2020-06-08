@@ -1,5 +1,5 @@
 export interface State {
-  onClick: (() => Promise<void>) | undefined;
+  onClick: (() => Promise<void> | void) | undefined;
   areaTitle: string;
   value: number;
 }

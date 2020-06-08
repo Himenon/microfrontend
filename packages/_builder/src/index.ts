@@ -5,15 +5,36 @@ import * as server from "./develop";
 import * as dtsBundle from "./dts-bundle";
 
 export interface CLIArguments {
+  /**
+   * build webpack
+   */
   build: boolean;
-  server: boolean;
+  /**
+   * use webpack-dev-server
+   */
+  devServer: boolean;
+  /**
+   * libName1
+   */
   libraryName?: string;
+  /**
+   * "pkgName1:libName1,pkgName2:libName2"
+   */
   externalAssets?: string;
-  root: boolean;
+  /**
+   * bundle type definition one file
+   */
   dtsBundle: boolean;
+  /**
+   * アプリケーションかどうか
+   */
+  app: boolean;
 }
 
 export const validateCliArguments = (args: commander.Command): CLIArguments => {
+  if (!!args["app"] && !!args["library"]) {
+    throw new Error(`--app と --libraryは同時に利用できません`);
+  }
   const typeofExternalAssets = typeof args["externalAssets"];
   if (!["undefined", "string"].includes(typeofExternalAssets)) {
     throw new Error(`--external-assetsの指定形式が異なります. Input Value: ${JSON.stringify(args["externalAssets"])}. Typeof: ${typeofExternalAssets}`);
@@ -24,11 +45,11 @@ export const validateCliArguments = (args: commander.Command): CLIArguments => {
   }
   return {
     build: !!args["build"],
-    server: !!args["server"],
+    devServer: !!args["devServer"],
     libraryName: args["library"],
     externalAssets: args["externalAssets"],
     dtsBundle: !!args["dtsBundle"],
-    root: !!args["root"],
+    app: !!args["app"],
   };
 };
 
@@ -51,12 +72,12 @@ export const parseExternalAssets = (inputText: string): build.ExternalAsset[] =>
 export const executeCommandLine = (): CLIArguments => {
   commander
     .version(pkg.version)
-    .option("-b --build", "build flag")
-    .option("-s --server", "server flag")
-    .option("--library [name]", "browser library name")
+    .option("--build", "build flag")
+    .option("--app", "公開可能なアプリケーションとして扱う. --libraryフラグと同時に利用できない。")
+    .option("--library [name]", "ライブラリとして扱う. --appフラグと同時に利用できない")
     .option("--external-assets [pkg:lib]", "pkgName1:libName1,pkgName2:libName2")
-    .option("--dts-bundle", ".dts")
-    .option("--root", "root")
+    .option("--dts-bundle", "型定義ファイルを1ファイルに纏める")
+    .option("--dev-server", "開発サーバーを起動する")
     .parse(process.argv);
   return validateCliArguments(commander);
 };
@@ -70,13 +91,13 @@ const main = async () => {
   }
 
   if (!args.build) {
-    if (args.server) {
+    if (args.devServer) {
       await server.exec({ isProduction, isDevServer: true, splitChunks: false });
       return;
     }
   }
 
-  if (args.root) {
+  if (args.app) {
     await build.exec4({ isProduction, isDevServer: false, splitChunks: true });
     return;
   }
@@ -96,11 +117,6 @@ const main = async () => {
 
   if (args.libraryName) {
     await build.library({ isProduction, libraryName: args.libraryName });
-    return;
-  }
-
-  if (args.build) {
-    await build.exec({ isProduction, isDevServer: false, splitChunks: true });
     return;
   }
 };

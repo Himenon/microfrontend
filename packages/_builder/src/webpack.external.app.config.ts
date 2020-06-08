@@ -20,8 +20,8 @@ export const generateConfig = ({ libraryName, externalAssets, ...props }: Props)
     new CopyPlugin({
       // @ts-ignore
       patterns: [
-        { to: "scripts", from: find("react-dom/umd/react-dom.production.min.js") },
-        { to: "scripts", from: find("react/umd/react.production.min.js") },
+        { to: "scripts", from: find(props.isProduction ? "react-dom/umd/react-dom.production.min.js" : "react-dom/umd/react-dom.development.js") },
+        { to: "scripts", from: find(props.isProduction ? "react/umd/react.production.min.js" : "react/umd/react.development.js") },
       ].concat(
         // { to: "scripts", from: find("@himenon/microfrontend-components/dist/MicroComponent.js") },
         externalAssets.map((asset) => ({
@@ -62,7 +62,7 @@ export const generateConfig = ({ libraryName, externalAssets, ...props }: Props)
     };
   }
   config.entry = {
-    [libraryName]: "./src/index.ts",
+    [libraryName]: ["regenerator-runtime/runtime", "./src/index.ts"],
   };
   config.output = {
     path: appPath("dist"),

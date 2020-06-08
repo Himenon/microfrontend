@@ -2,6 +2,8 @@ import * as fs from "fs";
 import * as path from "path";
 import resolvePkg from "resolve-pkg";
 
+export const builderRoot = path.resolve(__dirname, "../");
+
 // 実行場所がrootになる
 export const rootPath = process.cwd();
 export const appPath = (nextPath: string): string => path.join(rootPath, nextPath);
