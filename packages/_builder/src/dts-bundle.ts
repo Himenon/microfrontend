@@ -6,7 +6,7 @@ export const exec = (): void => {
     name: pkg.name,
     main: appPath("./module/index.d.ts"),
     out: appPath("./index.d.ts"),
-    removeSource: true,
+    removeSource: false,
     prefix: "__",
   });
 };

@@ -1,10 +1,18 @@
 import * as React from "react";
-import {} from "@himenon/microfrontend-tutorial";
+import { Domain, Page } from "@himenon/microfrontend-tutorial";
 
 const styles = require("./page.scss");
 
 export interface Props {}
 
 export const Component: React.FC<Props> = (props) => {
-  return <div className={styles.text}>Hello world</div>;
+  const reducers = Domain.createReducers();
+  return (
+    <div className={styles.text}>
+      <div>Hello world</div>
+      <div>
+        <Page.Container reducers={reducers} />
+      </div>
+    </div>
+  );
 };

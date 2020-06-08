@@ -7,6 +7,7 @@
   },
   "license": "MIT",
   "main": "./umd/MicroComponent.js",
+  "module": "./module/index.js",
   "types": "./index.d.ts",
   "scripts": {
     "build": "cross-env NODE_ENV=production micrforntend-builder --build --library MicroComponent && yarn tsc:build && yarn dts:build",

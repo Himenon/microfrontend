@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import webpack from "webpack";
-import * as path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import ManifestPlugin from "webpack-manifest-plugin";
@@ -21,9 +20,10 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 export interface Props {
   isProduction: boolean;
   isDevServer: boolean;
+  htmlWebpackPlugin?: { [key: string]: string };
 }
 
-export const generateConfig = ({ isProduction, isDevServer }: Props): webpack.Configuration => {
+export const generateConfig = ({ isProduction, isDevServer, htmlWebpackPlugin = {} }: Props): webpack.Configuration => {
   const isCI = process.env.CI;
   const tsLoader: webpack.RuleSetUse = {
     loader: "ts-loader",
@@ -166,10 +166,10 @@ export const generateConfig = ({ isProduction, isDevServer }: Props): webpack.Co
         }),
       new HtmlWebpackPlugin({
         title: pkg.name,
-        template: path.resolve(__dirname, "../public/index.html"),
+        template: appPath("./public/index.html"),
         React: isProduction ? "/scripts/react.production.min.js" : "/scripts/react.development.js",
         ReactDOM: isProduction ? "/scripts/react-dom.production.min.js" : "/scripts/react-dom.development.js",
-        MicroComponent: "/scripts/MicroComponent.js",
+        ...htmlWebpackPlugin,
         meta: {
           description: "micro frontend sample",
         },

@@ -9,6 +9,7 @@ export interface CLIArguments {
   server: boolean;
   libraryName?: string;
   add: boolean;
+  root: boolean;
   dtsBundle: boolean;
 }
 
@@ -19,6 +20,7 @@ export const validateCliArguments = (args: commander.Command): CLIArguments => {
     libraryName: args["library"],
     add: !!args["add"],
     dtsBundle: !!args["dtsBundle"],
+    root: !!args["root"],
   };
 };
 
@@ -30,6 +32,7 @@ export const executeCommandLine = (): CLIArguments => {
     .option("-lib --library [name]", "browser library name")
     .option("--add", "add externals")
     .option("--dts-bundle", "bundle type definition")
+    .option("--root", "root")
     .parse(process.argv);
   return validateCliArguments(commander);
 };
@@ -47,6 +50,10 @@ const main = async () => {
       await server.exec({ isProduction, isDevServer: true });
       return;
     }
+  }
+
+  if (args.root) {
+    await build.exec4({ isProduction, isDevServer: false });
   }
 
   if (args.add) {

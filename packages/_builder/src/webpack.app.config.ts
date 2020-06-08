@@ -10,7 +10,7 @@ export interface Props extends Base.Props {
 // @himenon/microfrontend-components:_External.MicroComponent,
 
 export const generateConfig = ({ libraryName, ...props }: Props): webpack.Configuration => {
-  const config = Base.generateConfig(props);
+  const config = Base.generateConfig({ ...props, htmlWebpackPlugin: { MicroComponent: "/scripts/MicroComponent.js" } });
   if (typeof config.externals === "object") {
     config.externals = { ...config.externals, "@himenon/microfrontend-components": "_External.MicroComponent" };
   }
