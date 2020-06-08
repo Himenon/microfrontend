@@ -85,7 +85,7 @@ export const generateConfig = ({
     mode: isProduction ? "production" : "development",
     target: "web",
     optimization: {
-      minimize: false,
+      minimize: isProduction,
       runtimeChunk: false,
       minimizer: [
         new TerserPlugin({
