@@ -8,20 +8,44 @@ export interface CLIArguments {
   build: boolean;
   server: boolean;
   libraryName?: string;
-  add: boolean;
+  externalAssets?: string;
   root: boolean;
   dtsBundle: boolean;
 }
 
 export const validateCliArguments = (args: commander.Command): CLIArguments => {
+  const typeofExternalAssets = typeof args["externalAssets"];
+  if (!["undefined", "string"].includes(typeofExternalAssets)) {
+    throw new Error(`--external-assetsの指定形式が異なります. Input Value: ${JSON.stringify(args["externalAssets"])}. Typeof: ${typeofExternalAssets}`);
+  }
+  const typeofLibrary = typeof args["library"];
+  if (!["undefined", "string"].includes(typeofLibrary)) {
+    throw new Error(`--libraryの指定形式が異なります. Input Value: ${JSON.stringify(args["library"])}. Typeof: ${typeofLibrary}`);
+  }
   return {
     build: !!args["build"],
     server: !!args["server"],
     libraryName: args["library"],
-    add: !!args["add"],
+    externalAssets: args["externalAssets"],
     dtsBundle: !!args["dtsBundle"],
     root: !!args["root"],
   };
+};
+
+/**
+ *
+ * @param inputText "pkgName1:libName1,pkgName2:libName2"
+ */
+export const parseExternalAssets = (inputText: string): build.ExternalAsset[] => {
+  // ["pkgName1:libName1", "pkgName2:libName2"]
+  const list: string[] = inputText.split(",");
+  return list.map((t) => {
+    const [pkgName, libName] = t.split(":");
+    return {
+      pkgName,
+      libName,
+    };
+  });
 };
 
 export const executeCommandLine = (): CLIArguments => {
@@ -29,9 +53,9 @@ export const executeCommandLine = (): CLIArguments => {
     .version(pkg.version)
     .option("-b --build", "build flag")
     .option("-s --server", "server flag")
-    .option("-lib --library [name]", "browser library name")
-    .option("--add", "add externals")
-    .option("--dts-bundle", "bundle type definition")
+    .option("--library [name]", "browser library name")
+    .option("--external-assets [pkg:lib]", "pkgName1:libName1,pkgName2:libName2")
+    .option("--dts-bundle", ".dts")
     .option("--root", "root")
     .parse(process.argv);
   return validateCliArguments(commander);
@@ -57,15 +81,21 @@ const main = async () => {
     return;
   }
 
-  if (args.add) {
+  if (args.externalAssets) {
     if (args.libraryName) {
-      await build.exec3({ isProduction, libraryName: args.libraryName, isDevServer: false, splitChunks: false });
+      await build.externalApp({
+        isProduction,
+        libraryName: args.libraryName,
+        isDevServer: false,
+        splitChunks: false,
+        externalAssets: parseExternalAssets(args.externalAssets),
+      });
       return;
     }
   }
 
   if (args.libraryName) {
-    await build.exec2({ isProduction, libraryName: args.libraryName });
+    await build.library({ isProduction, libraryName: args.libraryName });
     return;
   }
 

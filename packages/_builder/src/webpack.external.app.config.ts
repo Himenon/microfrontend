@@ -5,22 +5,30 @@ import CopyPlugin from "copy-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { appPath, pkg, find } from "./utils";
 
-export interface Props extends Base.Props {
-  libraryName: string;
+export interface ExternalAsset {
+  pkgName: string; // @himenon/microfrontend-components
+  libName: string; // MicroComponent
 }
 
-// @himenon/microfrontend-tutorial:_External.Tutorial
-// @himenon/microfrontend-components:_External.MicroComponent,
+export interface Props extends Base.Props {
+  libraryName: string;
+  externalAssets: ExternalAsset[];
+}
 
-export const generateConfig = ({ libraryName, ...props }: Props): webpack.Configuration => {
+export const generateConfig = ({ libraryName, externalAssets, ...props }: Props): webpack.Configuration => {
   const plugins: webpack.Plugin[] = [
     new CopyPlugin({
       // @ts-ignore
       patterns: [
         { to: "scripts", from: find("react-dom/umd/react-dom.production.min.js") },
         { to: "scripts", from: find("react/umd/react.production.min.js") },
-        { to: "scripts", from: find("@himenon/microfrontend-components/dist/MicroComponent.js") },
-      ],
+      ].concat(
+        // { to: "scripts", from: find("@himenon/microfrontend-components/dist/MicroComponent.js") },
+        externalAssets.map((asset) => ({
+          to: "scripts",
+          from: find(`${asset.pkgName}/dist/${asset.libName}.js`),
+        })),
+      ),
     }),
     new HtmlWebpackPlugin({
       title: pkg.name,
@@ -28,7 +36,13 @@ export const generateConfig = ({ libraryName, ...props }: Props): webpack.Config
       minify: false,
       React: props.isProduction ? "/scripts/react.production.min.js" : "/scripts/react.development.js",
       ReactDOM: props.isProduction ? "/scripts/react-dom.production.min.js" : "/scripts/react-dom.development.js",
-      MicroComponent: "/scripts/MicroComponent.js",
+      // MicroComponent: "/scripts/MicroComponent.js",
+      ...externalAssets.reduce((all, current) => {
+        return {
+          ...all,
+          [current.libName]: `/scripts/${current.libName}.js`,
+        };
+      }),
       meta: {
         description: "micro frontend sample",
       },
@@ -38,7 +52,13 @@ export const generateConfig = ({ libraryName, ...props }: Props): webpack.Config
   if (typeof config.externals === "object") {
     config.externals = {
       ...config.externals,
-      "@himenon/microfrontend-components": "_External.MicroComponent",
+      // "@himenon/microfrontend-components": "_External.MicroComponent",
+      ...externalAssets.reduce((all, current) => {
+        return {
+          ...all,
+          [current.pkgName]: `_External.${current.libName}`,
+        };
+      }),
     };
   }
   config.entry = {

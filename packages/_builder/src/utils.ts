@@ -1,3 +1,4 @@
+import * as fs from "fs";
 import * as path from "path";
 import resolvePkg from "resolve-pkg";
 
@@ -7,10 +8,14 @@ export const appPath = (nextPath: string): string => path.join(rootPath, nextPat
 
 export const pkg = require(appPath("./package.json"));
 
+export const existFile = (filename: string): boolean => {
+  return fs.existsSync(filename) && fs.statSync(filename).isFile();
+};
+
 export const find = (searchPath: string): string => {
-  const result = resolvePkg(searchPath);
-  if (result) {
-    return result;
+  const filename = resolvePkg(searchPath) || "";
+  if (existFile(filename)) {
+    return filename;
   }
   throw new Error(`Not found: ${searchPath}`);
 };
