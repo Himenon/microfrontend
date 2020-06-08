@@ -6,7 +6,8 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
-import { appPath, builderRoot } from './utils';
+import { appPath, builderRoot } from "./utils";
+import { ENTRY_FILE, DEV_SERVER_FILE, APP_COMPONENT, APP_CONTAINER, APP_DOMAIN, APP_INFRA } from "./consts";
 
 import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin";
 
@@ -135,7 +136,7 @@ export const generateConfig = ({
       },
     },
     entry: {
-      application: ["core-js", "regenerator-runtime/runtime", isDevServer ? "./src/DebugServer.tsx" : "./src/index.ts"],
+      application: ["core-js", "regenerator-runtime/runtime", isDevServer ? DEV_SERVER_FILE : ENTRY_FILE],
     },
     devtool: "cheap-source-map",
     devServer: {
@@ -178,10 +179,10 @@ export const generateConfig = ({
     resolve: {
       extensions: [".js", ".ts", ".tsx", ".scss", ".json"],
       alias: {
-        "@app/component": appPath("./src/component/index.ts"),
-        "@app/container": appPath("./src/container/index.ts"),
-        "@app/domain": appPath("./src/domain/index.ts"),
-        "@app/infra": appPath("./src/infra/index.ts"),
+        "@app/component": appPath(APP_COMPONENT),
+        "@app/container": appPath(APP_CONTAINER),
+        "@app/domain": appPath(APP_DOMAIN),
+        "@app/infra": appPath(APP_INFRA),
       },
     },
     module: {

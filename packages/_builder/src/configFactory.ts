@@ -4,6 +4,7 @@ import * as Base from "./webpack.base.config";
 import CopyPlugin from "copy-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { appPath, pkg, find } from "./utils";
+import { ENTRY_FILE } from "./consts";
 
 export interface ExternalAsset {
   pkgName: string; // @himenon/microfrontend-components
@@ -70,7 +71,7 @@ export interface ExternalAppProps extends OverrideProps {
 export const generateExternalAppConfig = (props: ExternalAppProps): webpack.Configuration => {
   const config = getOverrideConfig(props);
   config.entry = {
-    [props.libraryName]: "./src/index.ts",
+    [props.libraryName]: ENTRY_FILE,
   };
   config.output = {
     path: appPath("dist"),

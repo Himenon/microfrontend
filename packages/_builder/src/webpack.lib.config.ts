@@ -1,5 +1,6 @@
 import webpack from "webpack";
 import { appPath } from "./utils";
+import { ENTRY_FILE } from "./consts";
 
 import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin";
 
@@ -32,7 +33,7 @@ export const generateConfig = ({ isProduction, libraryName }: Props): webpack.Co
     mode: isProduction ? "production" : "development",
     target: "web",
     entry: {
-      [libraryName]: "./src/index.ts",
+      [libraryName]: ENTRY_FILE,
     },
     output: {
       path: appPath("dist"),
