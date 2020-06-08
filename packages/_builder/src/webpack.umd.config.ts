@@ -19,6 +19,8 @@ export const generateConfig = ({ isProduction, libraryName }: Props): webpack.Co
     },
   };
 
+  console.log(`LibName = _External.${libraryName}`);
+
   const babelLoader: webpack.RuleSetUse = {
     loader: "babel-loader",
     options: {

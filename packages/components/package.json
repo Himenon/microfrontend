@@ -6,7 +6,7 @@
     "url": "git@github.com:Himenon/microfrontend.git"
   },
   "license": "MIT",
-  "main": "./umd/MicroComponent.js",
+  "main": "./index.js",
   "module": "./module/index.js",
   "types": "./index.d.ts",
   "scripts": {

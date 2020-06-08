@@ -43,5 +43,6 @@ export const generateConfig = ({ ...props }: Props): webpack.Configuration => {
       "@himenon/microfrontend-tutorial": "_External.Tutorial",
     };
   }
+  console.log(config.externals);
   return config;
 };

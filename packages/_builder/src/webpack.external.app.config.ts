@@ -36,16 +36,20 @@ export const generateConfig = ({ libraryName, ...props }: Props): webpack.Config
   ];
   const config = Base.generateConfig({ ...props, plugins });
   if (typeof config.externals === "object") {
-    config.externals = { ...config.externals, "@himenon/microfrontend-components": "_External.MicroComponent" };
+    config.externals = {
+      ...config.externals,
+      "@himenon/microfrontend-components": "_External.MicroComponent",
+    };
   }
+  console.log(config.externals);
   config.entry = {
     [libraryName]: "./src/index.ts",
   };
   config.output = {
     path: appPath("umd"),
     filename: "[name].js",
-    library: ["_External", "[name]"], // externalsのvalueの値になる
-    libraryTarget: "umd", // ブラウザのライブラリとして利用する場合に必要
+    // library: ["_External", "[name]"], // externalsのvalueの値になる
+    // libraryTarget: "umd", // ブラウザのライブラリとして利用する場合に必要
   };
   return config;
 };

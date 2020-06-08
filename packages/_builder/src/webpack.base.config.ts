@@ -10,7 +10,6 @@ import { appPath } from "./utils";
 
 import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin";
 
-const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const WebpackNotifierPlugin = require("webpack-notifier");
 const ForkTsCheckerNotifierWebpackPlugin = require("fork-ts-checker-notifier-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
@@ -149,7 +148,6 @@ export const generateConfig = ({
           openAnalyzer: false,
           reportFilename: isProduction ? appPath("docs/bundle.prod.html") : appPath("docs/bundle.dev.html"),
         }),
-      new ProgressBarPlugin(),
       new FriendlyErrorsWebpackPlugin({
         clearConsole: false,
       }),
@@ -184,8 +182,6 @@ export const generateConfig = ({
         "@app/domain": appPath("./src/domain/index.ts"),
         "@app/infra": appPath("./src/infra/index.ts"),
         "@app/style": appPath("./src/style/index.ts"),
-        React: appPath("node_modules/react"),
-        ReactDOM: appPath("node_modules/react-dom"),
       },
     },
     module: {
