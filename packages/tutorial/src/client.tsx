@@ -5,7 +5,7 @@ import { Page } from "./container";
 
 export interface Props {
   areaTitle: string;
-  onClick: () => Promise<void> | void;
+  onClick: () => Promise<void>;
 }
 
 export const run = (container: Element, props: Props): void => {

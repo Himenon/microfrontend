@@ -1,4 +1,4 @@
-export const ENTRY_FILE = "./src/index.ts";
+export const ENTRY_FILE = "./src/index.tsx";
 export const DEV_SERVER_FILE = "./src/DevServer.tsx";
 
 export const APP_COMPONENT = "./src/component/index.ts";
