@@ -48,8 +48,8 @@ export const generateConfig = ({ libraryName, ...props }: Props): webpack.Config
   config.output = {
     path: appPath("umd"),
     filename: "[name].js",
-    // library: ["_External", "[name]"], // externalsのvalueの値になる
-    // libraryTarget: "umd", // ブラウザのライブラリとして利用する場合に必要
+    library: ["_External", "[name]"], // externalsのvalueの値になる
+    // libraryTarget: "umd", // 指定すると、webpackビルド時に_Externalを参照しなくなる
   };
   return config;
 };

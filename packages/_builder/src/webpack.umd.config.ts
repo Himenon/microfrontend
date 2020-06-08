@@ -39,7 +39,7 @@ export const generateConfig = ({ isProduction, libraryName }: Props): webpack.Co
       filename: "[name].js",
       // https://github.com/webpack/webpack/tree/master/examples/multi-part-library#webpackconfigjs
       library: ["_External", "[name]"], // externalsのvalueの値になる
-      libraryTarget: "umd", // ブラウザのライブラリとして利用する場合に必要
+      // libraryTarget: "umd", // 指定すると、webpackビルド時に_Externalを参照しなくなる
     },
     externals: {
       react: "React", // 必須
