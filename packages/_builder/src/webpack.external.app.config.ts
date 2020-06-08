@@ -42,7 +42,7 @@ export const generateConfig = ({ libraryName, externalAssets, ...props }: Props)
           ...all,
           [current.libName]: `/scripts/${current.libName}.js`,
         };
-      }),
+      }, {}),
       meta: {
         description: "micro frontend sample",
       },
@@ -58,11 +58,11 @@ export const generateConfig = ({ libraryName, externalAssets, ...props }: Props)
           ...all,
           [current.pkgName]: `_External.${current.libName}`,
         };
-      }),
+      }, {}),
     };
   }
   config.entry = {
-    [libraryName]: ["regenerator-runtime/runtime", "./src/index.ts"],
+    [libraryName]: "./src/index.ts",
   };
   config.output = {
     path: appPath("dist"),
