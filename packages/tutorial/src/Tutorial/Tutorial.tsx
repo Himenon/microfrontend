@@ -18,7 +18,7 @@ export const Component: React.FC<Props> = (props) => {
   };
   return (
     <section className={classNames.tutorial}>
-      <p>
+      <p className={classNames.buttonArea}>
         <button type="button" onClick={() => updateCount(-1)}>
           Prev
         </button>

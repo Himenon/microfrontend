@@ -1,10 +1,19 @@
 * {
   box-sizing: border-box;
 }
-html, body {
+
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
+}
+
+:global(#root) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 30px 0;
 }
 
 .container {
@@ -24,6 +33,10 @@ html, body {
   border: 1px solid #333;
 }
 
-.tutorial {
-  color: blue;
+.col-title {
+  text-align: center;
+}
+
+.col:nth-child(1) {
+  background-color: #F8CECC;
 }
