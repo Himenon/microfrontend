@@ -2,10 +2,12 @@ import express from "express";
 import webpack from "webpack";
 import * as ConfigFactory from "./configFactory";
 import { find } from "./utils";
+import { clean } from "./clean";
 import webpackDevServer from "webpack-dev-server";
 
 export const exec = async (params: ConfigFactory.BuildParams): Promise<void> => {
   process.env.NODE_ENV = "development";
+  clean();
   const config = ConfigFactory.getConfig(params);
   const compiler = webpack(config);
   const server = new webpackDevServer(compiler, {

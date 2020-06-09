@@ -114,9 +114,9 @@ const main = async () => {
   }
 
   if (args.app) {
-    build.exec({ type: "app", props: { isProduction, isDevServer: false, splitChunks: true, extractCss: true, externalAssets } });
+    await build.exec({ type: "app", props: { isProduction, isDevServer: false, splitChunks: true, extractCss: true, externalAssets } });
   } else if (args.libraryName) {
-    build.exec({
+    await build.exec({
       type: "library",
       props: {
         isProduction,

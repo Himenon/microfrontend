@@ -13,6 +13,8 @@
     "noImplicitAny": false,
     "noLib": false,
     "noUnusedLocals": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
     "noUnusedParameters": false,
     "preserveConstEnums": true,
     "skipLibCheck": true,

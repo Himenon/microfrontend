@@ -1,7 +1,12 @@
 import { rootPath } from "./utils";
 import { execSync } from "child_process";
+import chalk from "chalk";
 
 export const exec = (): void => {
-  const result = execSync("yarn tsc -p tsconfig.json", { cwd: rootPath })
-  console.log(result.toString());
+  try {
+    const result = execSync("yarn tsc -p tsconfig.json", { cwd: rootPath })
+    console.log(result.toString());
+  } catch (error) {
+    console.error(chalk.red(error));
+  }
 }
