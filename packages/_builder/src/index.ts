@@ -2,8 +2,6 @@ import commander from "commander";
 const pkg = require("../package.json");
 import * as build from "./build";
 import * as server from "./develop";
-import * as dtsBundle from "./dts-bundle";
-import { clean } from "./clean";
 
 export interface CLIArguments {
   /**
@@ -22,10 +20,6 @@ export interface CLIArguments {
    * "pkgName1:libName1,pkgName2:libName2"
    */
   externalAssets?: string;
-  /**
-   * bundle type definition one file
-   */
-  dtsBundle: boolean;
   /**
    * アプリケーションかどうか
    */
@@ -51,7 +45,6 @@ export const validateCliArguments = (args: commander.Command): CLIArguments => {
     devServer: !!args["devServer"],
     libraryName: args["library"],
     externalAssets: args["externalAssets"],
-    dtsBundle: !!args["dtsBundle"],
     app: !!args["app"],
   };
 };
@@ -82,7 +75,6 @@ export const executeCommandLine = (): CLIArguments => {
     .option("--app", "公開可能なアプリケーションとして扱う. --libraryフラグと同時に利用できない。")
     .option("--library [name]", "ライブラリとして扱う. --appフラグと同時に利用できない")
     .option("--external-assets [pkg:lib]", "pkgName1:libName1,pkgName2:libName2")
-    .option("--dts-bundle", "型定義ファイルを1ファイルに纏める")
     .option("--dev-server", "開発サーバーを起動する")
     .parse(process.argv);
   return validateCliArguments(commander);
@@ -92,10 +84,6 @@ const main = async () => {
   const args = executeCommandLine();
   const isProduction = process.env.NODE_ENV === "production";
   const externalAssets = parseExternalAssets(args.externalAssets);
-  if (args.dtsBundle) {
-    dtsBundle.exec();
-    return;
-  }
 
   if (!args.build) {
     if (args.devServer) {
@@ -124,10 +112,8 @@ const main = async () => {
   }
 
   if (args.app) {
-    clean();
     build.exec({ type: "app", props: { isProduction, isDevServer: false, splitChunks: true, extractCss: true, externalAssets } });
   } else if (args.libraryName) {
-    clean();
     build.exec({
       type: "library",
       props: {

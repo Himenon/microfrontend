@@ -14,12 +14,10 @@
   "main": "./index.js",
   "types": "./index.d.ts",
   "scripts": {
-    "build": "cross-env NODE_ENV=production yarn webpack:build && yarn tsc:build && yarn dts:build",
+    "build": "cross-env NODE_ENV=production yarn webpack:build",
     "build:dev": "cross-env NODE_ENV=development micrforntend-builder --build",
-    "dts:build": "micrforntend-builder --dts-bundle",
     "server": "cross-env NODE_ENV=development yarn webpack:server",
     "test": "jest -c jest.config.js",
-    "tsc:build": "tsc -b tsconfig.json",
     "webpack:build": "micrforntend-builder --build --library MicroComponent",
     "webpack:server": "micrforntend-builder --dev-server --library MicroComponent"
   },

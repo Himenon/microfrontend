@@ -14,14 +14,12 @@
     "dist"
   ],
   "scripts": {
-    "build": "cross-env NODE_ENV=development yarn webpack:build && yarn tsc:build && yarn dts:build",
+    "build": "cross-env NODE_ENV=development yarn webpack:build",
     "webpack:build": "micrforntend-builder --build --library Tutorial --external-assets '@himenon/microfrontend-components:MicroComponent'",
     "webpack:server": "micrforntend-builder --dev-server --library Tutorial --external-assets '@himenon/microfrontend-components:MicroComponent'",
     "build:dev": "cross-env NODE_ENV=development micrforntend-builder --build",
-    "dts:build": "micrforntend-builder --dts-bundle",
     "server": "cross-env NODE_ENV=development yarn webpack:server",
-    "test": "jest -c jest.config.js",
-    "tsc:build": "tsc -b tsconfig.json"
+    "test": "jest -c jest.config.js"
   },
   "dependencies": {
     "@himenon/microfrontend-components": "0.1.0",
