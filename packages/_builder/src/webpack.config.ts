@@ -20,6 +20,7 @@ export interface Props {
   isProduction: boolean;
   isDevServer: boolean;
   splitChunks: boolean;
+  libraryName?: string;
   plugins?: webpack.Plugin[];
   extractCss?: boolean;
 }
@@ -30,8 +31,9 @@ export const generateConfig = ({
   splitChunks = false,
   extractCss = false,
   plugins = [],
+  libraryName,
 }: Props): webpack.Configuration => {
-  console.log({
+  console.info({
     "process.env.NODE_ENV": process.env.NODE_ENV,
     isProduction,
     isDevServer,
@@ -69,7 +71,7 @@ export const generateConfig = ({
         localsConvention: "camelCase",
         importLoaders: 2,
         modules: {
-          localIdentName: "___[local]___[hash:base64:5]",
+          localIdentName: libraryName ? `___${libraryName.toLowerCase()}___[local]___[hash:base64:5]` : "___[local]___[hash:base64:5]",
         },
       },
     },
@@ -206,7 +208,7 @@ export const generateConfig = ({
         },
         {
           test: /\.scss$/,
-          loaders: [(extractCss || undefined) && (!isDevServer ? MiniCssExtractPlugin.loader : "style-loader"), ...cssLoaders].filter(
+          loaders: [extractCss ? (!isDevServer ? MiniCssExtractPlugin.loader : "style-loader") : "style-loader", ...cssLoaders].filter(
             Boolean,
           ) as webpack.RuleSetUse,
         },

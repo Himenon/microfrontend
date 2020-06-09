@@ -69,11 +69,12 @@ const getOverrideConfig = ({ externalAssets, ...props }: OverrideProps): webpack
   return config;
 };
 
-export interface ExternalAppProps extends OverrideProps {
-  libraryName: string;
-}
+export type ExternalAppProps = OverrideProps;
 
 const generateExternalAppConfig = (props: ExternalAppProps): webpack.Configuration => {
+  if (!props.libraryName) {
+    throw new Error("`---library`によってlibrary名が指定されていません");
+  }
   const config = getOverrideConfig(props);
   if (!props.isDevServer) {
     config.entry = {

@@ -11,7 +11,7 @@ export const Component: React.FC<Props> = (props) => {
   return (
     <div className={classNames.step}>
       <p>{props.title}</p>
-      {props.thumbnailSrc && <img alt="thumnail" src={props.thumbnailSrc} style={{ width: 640, height: 320 }} />}
+      {props.thumbnailSrc && <img alt="thumbnail" src={props.thumbnailSrc} style={{ width: 640, height: 320 }} />}
       <p>{props.description}</p>
     </div>
   );
