@@ -18,11 +18,10 @@
     "webpack:build": "micrforntend-builder --build --library Tutorial --external-assets '@himenon/microfrontend-components:MicroComponent'",
     "webpack:server": "micrforntend-builder --dev-server --library Tutorial --external-assets '@himenon/microfrontend-components:MicroComponent'",
     "build:dev": "cross-env NODE_ENV=development micrforntend-builder --build",
-    "clean": "rimraf index.d.ts docs coverage module umd dist *.tsbuildinfo",
     "dts:build": "micrforntend-builder --dts-bundle",
     "server": "cross-env NODE_ENV=development yarn webpack:server",
     "test": "jest -c jest.config.js",
-    "tsc:build": "tsc -b tsconfig.module.json"
+    "tsc:build": "tsc -b tsconfig.json"
   },
   "dependencies": {
     "@himenon/microfrontend-components": "0.1.0",

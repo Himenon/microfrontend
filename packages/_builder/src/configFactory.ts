@@ -34,13 +34,13 @@ export const getOverrideConfig = ({ externalAssets, ...props }: OverrideProps): 
       title: pkg.name,
       template: appPath("./public/index.html"),
       minify: false,
-      React: props.isProduction ? "/scripts/react.production.min.js" : "/scripts/react.development.js",
-      ReactDOM: props.isProduction ? "/scripts/react-dom.production.min.js" : "/scripts/react-dom.development.js",
+      React: props.isProduction ? "./scripts/react.production.min.js" : "./scripts/react.development.js",
+      ReactDOM: props.isProduction ? "./scripts/react-dom.production.min.js" : "./scripts/react-dom.development.js",
       // MicroComponent: "/scripts/MicroComponent.js",
       ...externalAssets.reduce((all, current) => {
         return {
           ...all,
-          [current.libName]: `/scripts/${current.libName}.js`,
+          [current.libName]: `./scripts/${current.libName}.js`,
         };
       }, {}),
       meta: {

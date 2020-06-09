@@ -1,37 +1,31 @@
 import webpack from "webpack";
-import * as Base from "./webpack.config";
 import * as ConfigFactory from "./configFactory";
 
 export type ExternalAsset = ConfigFactory.ExternalAsset;
 
-export const exec = async (props: Base.Props): Promise<void> => {
-  const config = Base.generateConfig(props);
-  const compiler = webpack(config);
-  compiler.run((err) => {
-    console.error(err);
-  });
-};
+export type BuildParams =
+  | {
+      type: "library";
+      props: ConfigFactory.ExternalAppProps;
+    }
+  | {
+      type: "app";
+      props: ConfigFactory.AppProps;
+    };
 
-export const library = async (props: ConfigFactory.ExternalAppProps): Promise<void> => {
-  const config = ConfigFactory.generateExternalAppConfig(props);
-  const compiler = webpack(config);
-  compiler.run((err) => {
-    console.error(err);
-  });
-};
+const getConfig = (params: BuildParams) => {
+  if (params.type === "library") {
+    return ConfigFactory.generateExternalAppConfig(params.props)
+  } else {
+    return ConfigFactory.generateAppConfig(params.props);
+  }
+}
 
-export const externalApp = async (props: ConfigFactory.ExternalAppProps): Promise<void> => {
-  const config = ConfigFactory.generateExternalAppConfig(props);
+export const exec = (params: BuildParams): void => {
+  const config = getConfig(params);
   const compiler = webpack(config);
   compiler.run((err) => {
     console.error(err);
   });
-};
+}
 
-export const app = async (props: ConfigFactory.AppProps): Promise<void> => {
-  const config = ConfigFactory.generateAppConfig(props);
-  const compiler = webpack(config);
-  compiler.run((err) => {
-    console.error(err);
-  });
-};

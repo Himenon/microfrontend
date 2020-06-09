@@ -49,6 +49,7 @@
     "webpack-notifier": "^1.8.0"
   },
   "devDependencies": {
-    "@types/friendly-errors-webpack-plugin": "^0.1.2"
+    "@types/friendly-errors-webpack-plugin": "^0.1.2",
+    "@types/rimraf": "^3.0.0"
   }
 }

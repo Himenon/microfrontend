@@ -3,6 +3,7 @@ const pkg = require("../package.json");
 import * as build from "./build";
 import * as server from "./develop";
 import * as dtsBundle from "./dts-bundle";
+import { clean } from "./clean";
 
 export interface CLIArguments {
   /**
@@ -123,22 +124,23 @@ const main = async () => {
   }
 
   if (args.app) {
-    await build.app({ isProduction, isDevServer: false, splitChunks: true, extractCss: true, externalAssets });
-    return;
-  }
-
-  if (args.libraryName) {
-    await build.externalApp({
-      isProduction,
-      libraryName: args.libraryName,
-      isDevServer: false,
-      splitChunks: false,
-      externalAssets,
-      extractCss: false,
+    clean();
+    build.exec({ type: "app", props: { isProduction, isDevServer: false, splitChunks: true, extractCss: true, externalAssets } });
+  } else if (args.libraryName) {
+    clean();
+    build.exec({
+      type: "library",
+      props: {
+        isProduction,
+        libraryName: args.libraryName,
+        isDevServer: false,
+        splitChunks: false,
+        externalAssets,
+        extractCss: false,
+      },
     });
-    return;
   }
-
+  return;
 };
 
 main().catch((error) => {

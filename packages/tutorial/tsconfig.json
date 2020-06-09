@@ -2,9 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "module": "commonjs",
     "rootDir": "./src",
-    "outDir": "module",
+    "outDir": "./module",
     "paths": {
       "@app/*": ["./src/*"]
     }
