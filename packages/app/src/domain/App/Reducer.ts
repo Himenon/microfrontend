@@ -11,6 +11,9 @@ export const reducer = (state: State, action: ActionTypes): State => {
       repository.saveItem<number>(Constants.STORE_COUNT_KEY, action.value);
       return { ...state, value: action.value };
     }
+    case "UPDATE_SHARE_TEXT": {
+      return { ...state, shareText: action.value };
+    }
     default:
       return state;
   }

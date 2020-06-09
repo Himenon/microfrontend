@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import * as Tutorial from "./Tutorial/Tutorial";
+import * as Tutorial from "./Navigation/Navigation";
 const classNames = require("./dev_server.scss");
 
 const props: Tutorial.Props = {
@@ -31,6 +31,9 @@ const props: Tutorial.Props = {
       description: "chapter 5 description",
     },
   ],
+  stateText: "適当な入力",
+  propText: "pure props",
+  textChangeCallback: () => undefined,
 };
 
 const Wrapper: React.FC = (props) => {

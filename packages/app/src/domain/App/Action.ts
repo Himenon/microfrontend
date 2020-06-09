@@ -5,6 +5,11 @@ export interface UpdateCountAction {
   value: number;
 }
 
-export type ActionTypes = UpdateCountAction;
+export interface UpdateShareText {
+  type: "UPDATE_SHARE_TEXT";
+  value: string;
+}
+
+export type ActionTypes = UpdateCountAction | UpdateShareText;
 
 export type Dispatch = React.Dispatch<ActionTypes>;
