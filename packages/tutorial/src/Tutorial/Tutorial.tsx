@@ -26,7 +26,6 @@ export const Component: React.FC<Props> = (props) => {
         <button type="button" onClick={() => updateCount(1)}>
           Next
         </button>
-        <span>{currentStep}</span>
       </p>
       {step && <Step.Component {...step} />}
     </section>
