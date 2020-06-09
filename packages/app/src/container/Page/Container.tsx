@@ -34,6 +34,7 @@ const generateProps = (stores: Domain.Stores, store: Store): Page.Props => {
   ];
   return {
     shareText: {
+      value: store.navigationText,
       onChange: (target) => {
         if (target.currentTarget) {
           store.updateText(target.currentTarget.value);
@@ -45,10 +46,11 @@ const generateProps = (stores: Domain.Stores, store: Store): Page.Props => {
       navigation: {
         propText: store.navigationText,
         stateText: store.navigationText,
-        textChangeCallback: (callback) => {
+        updateTextEventListener: (callback) => {
           // @ts-ignore
           store.textChangeCallback = callback;
         },
+        updateParentText: store.updateText,
         steps,
       },
     },
@@ -56,7 +58,8 @@ const generateProps = (stores: Domain.Stores, store: Store): Page.Props => {
       navigation: {
         propText: store.navigationText,
         stateText: store.navigationText,
-        textChangeCallback: (callback) => undefined,
+        updateTextEventListener: (callback) => undefined,
+        updateParentText: store.updateText,
         steps,
       },
     },
@@ -64,7 +67,8 @@ const generateProps = (stores: Domain.Stores, store: Store): Page.Props => {
       navigation: {
         propText: store.navigationText,
         stateText: store.navigationText,
-        textChangeCallback: (callback) => undefined,
+        updateTextEventListener: (callback) => undefined,
+        updateParentText: store.updateText,
         steps,
       },
     },

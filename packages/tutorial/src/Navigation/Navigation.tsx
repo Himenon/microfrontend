@@ -6,7 +6,8 @@ export interface Props {
   steps: Step.Props[];
   stateText: string;
   propText: string;
-  textChangeCallback: (callback: (text: string) => void) => void;
+  updateTextEventListener: (callback: (text: string) => void) => void;
+  updateParentText: (text: string) => void;
 }
 
 export const Component: React.FC<Props> = (props) => {
@@ -20,8 +21,7 @@ export const Component: React.FC<Props> = (props) => {
       updateStep(nextStep);
     }
   };
-
-  props.textChangeCallback((newText) => {
+  props.updateTextEventListener((newText) => {
     updateText(newText);
   });
   return (
@@ -37,6 +37,18 @@ export const Component: React.FC<Props> = (props) => {
       </p>
       <p>StateText: {text}</p>
       <p>PureProps: {props.propText}</p>
+      <p>
+        UpdateText:{" "}
+        <input
+          type="text"
+          value={props.propText}
+          onChange={(event) => {
+            if (event.currentTarget) {
+              props.updateParentText(event.currentTarget.value);
+            }
+          }}
+        />
+      </p>
       {step && <Step.Component {...step} />}
     </section>
   );

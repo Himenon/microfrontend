@@ -33,7 +33,8 @@ const props: Tutorial.Props = {
   ],
   stateText: "適当な入力",
   propText: "pure props",
-  textChangeCallback: () => undefined,
+  updateTextEventListener: () => undefined,
+  updateParentText: () => undefined,
 };
 
 const Wrapper: React.FC = (props) => {
