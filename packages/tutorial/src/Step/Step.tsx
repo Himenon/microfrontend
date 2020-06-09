@@ -1,5 +1,5 @@
 import * as React from "react";
-const classNames = require("./step");
+const classNames = require("./step.scss");
 
 export interface Props {
   title: string;

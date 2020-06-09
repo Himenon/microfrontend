@@ -18,9 +18,9 @@ export const exec = async (params: ConfigFactory.BuildParams): Promise<void> => 
     before: (app: express.Application, _server: any) => {
       app.use("/scripts/react.development.js", express.static(find("react/umd/react.development.js")));
       app.use("/scripts/react-dom.development.js", express.static(find("react-dom/umd/react-dom.development.js")));
-      params.props.externalAssets.forEach(externalAsset => {
+      params.props.externalAssets.forEach((externalAsset) => {
         app.use(`/scripts/${externalAsset.libName}.js`, express.static(find(`${externalAsset.pkgName}/dist/${externalAsset.libName}.js`)));
-      })
+      });
     },
   });
   server.listen(9000);

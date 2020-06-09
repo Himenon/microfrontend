@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Step from "../Step/Step";
-const classNames = require("./tutorial");
+const classNames = require("./tutorial.scss");
 
 export interface Props {
   steps: Step.Props[];
@@ -11,17 +11,13 @@ export const Component: React.FC<Props> = (props) => {
   const step = props.steps.length ? props.steps[currentStep] : undefined;
 
   const updateCount = (increment: number) => {
-    if (increment < 0) {
-      updateStep(0);
+    const nextStep = currentStep + increment;
+    if (0 < nextStep && nextStep < props.steps.length) {
+      updateStep(nextStep);
     }
-    if (increment > props.steps.length - 1) {
-      updateStep(props.steps.length);
-    }
-    updateStep(currentStep + increment);
   };
   return (
     <section className={classNames.tutorial}>
-      {step && <Step.Component {...step} />}
       <p>
         <button type="button" onClick={() => updateCount(-1)}>
           Prev
@@ -30,7 +26,9 @@ export const Component: React.FC<Props> = (props) => {
         <button type="button" onClick={() => updateCount(1)}>
           Next
         </button>
+        <span>{currentStep}</span>
       </p>
+      {step && <Step.Component {...step} />}
     </section>
   );
 };

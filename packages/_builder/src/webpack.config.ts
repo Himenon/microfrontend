@@ -14,6 +14,7 @@ import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin";
 const WebpackNotifierPlugin = require("webpack-notifier");
 const ForkTsCheckerNotifierWebpackPlugin = require("fork-ts-checker-notifier-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 
 export interface Props {
   isProduction: boolean;
@@ -163,6 +164,7 @@ export const generateConfig = ({
       new FriendlyErrorsWebpackPlugin({
         clearConsole: false,
       }),
+      new CaseSensitivePathsPlugin(),
       new WebpackNotifierPlugin(),
       new ForkTsCheckerWebpackPlugin(),
       new ForkTsCheckerNotifierWebpackPlugin({ excludeWarnings: false }),
