@@ -30,9 +30,15 @@ export const generateConfig = ({
   extractCss = false,
   plugins = [],
 }: Props): webpack.Configuration => {
-  console.log(`process.env.NODE_ENV = ${process.env.NODE_ENV}, isProduction = ${isProduction}`);
+  console.log({
+    "process.env.NODE_ENV": process.env.NODE_ENV,
+    isProduction,
+    isDevServer,
+    splitChunks,
+    extractCss,
+  });
   if ((process.env.NODE_ENV === "production") !== isProduction) {
-    throw new Error("NODE_ENVとisProductionフラグに相違があります。")
+    throw new Error("NODE_ENVとisProductionフラグに相違があります。");
   }
   const isCI = process.env.CI;
   const tsLoader: webpack.RuleSetUse = {
@@ -162,7 +168,7 @@ export const generateConfig = ({
       new ForkTsCheckerNotifierWebpackPlugin({ excludeWarnings: false }),
       new webpack.HotModuleReplacementPlugin(),
       new CleanWebpackPlugin(),
-      isProduction &&
+      !isDevServer &&
         extractCss &&
         new MiniCssExtractPlugin({
           filename: "stylesheets/[name].[contenthash:8].css",
