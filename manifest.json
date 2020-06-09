@@ -1,8 +1,8 @@
 {
   "application.js": "scripts/application.bundle.js",
-  "styles.css": "stylesheets/styles.d26bec8b.chunk.css",
+  "styles.css": "stylesheets/styles.b958bbbe.chunk.css",
   "styles.js": "scripts/styles.chunk.js",
-  "styles.css.map": "stylesheets/styles.d26bec8b.chunk.css.map",
+  "styles.css.map": "stylesheets/styles.b958bbbe.chunk.css.map",
   "vendor.js": "scripts/vendor.chunk.js",
   "vendor.js.map": "scripts/vendor.chunk.js.map",
   "index.html": "index.html",
@@ -10,5 +10,6 @@
   "scripts/Tutorial.js": "scripts/Tutorial.js",
   "scripts/react-dom.production.min.js": "scripts/react-dom.production.min.js",
   "scripts/react.production.min.js": "scripts/react.production.min.js",
+  "scripts/runtime.js": "scripts/runtime.js",
   "scripts/vendor.chunk.js.LICENSE.txt": "scripts/vendor.chunk.js.LICENSE.txt"
 }
