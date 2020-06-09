@@ -12,6 +12,7 @@
     "clean": "lerna run clean",
     "commit": "npx git-cz",
     "format": "yarn lint --fix && prettier --write \"**/*.{ts,tsx,js,jsx,json,yml,yaml,html,md}\"",
+    "format:packagejson": "sort-package-json ./package.json ./packages/**/package.json",
     "lint": "eslint -c ./.eslintrc.js 'packages/**/*.{ts,tsx}'",
     "lint:fix": "yarn lint --fix",
     "test": "lerna run test",

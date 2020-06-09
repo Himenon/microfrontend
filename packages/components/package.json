@@ -5,14 +5,14 @@
     "type": "git",
     "url": "git@github.com:Himenon/microfrontend.git"
   },
+  "license": "MIT",
+  "main": "./index.js",
+  "types": "./index.d.ts",
   "files": [
     "index.js",
     "index.d.ts",
     "dist"
   ],
-  "license": "MIT",
-  "main": "./index.js",
-  "types": "./index.d.ts",
   "scripts": {
     "build": "cross-env NODE_ENV=production yarn webpack:build",
     "build:dev": "cross-env NODE_ENV=development micrforntend-builder --build",
