@@ -8,7 +8,9 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "yarn clean && lerna run build",
+    "build": "yarn clean && yarn build:prod",
+    "build:prod": "cross-env NODE_ENV=production lerna run build",
+    "build:dev": "cross-env NODE_ENV=development lerna run build",
     "clean": "lerna run clean",
     "commit": "npx git-cz",
     "format": "yarn lint --fix && prettier --write \"**/*.{ts,tsx,js,jsx,json,yml,yaml,html,md}\"",

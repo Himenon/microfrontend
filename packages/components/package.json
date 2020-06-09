@@ -14,12 +14,10 @@
     "dist"
   ],
   "scripts": {
-    "build": "cross-env NODE_ENV=production yarn webpack:build",
-    "build:dev": "cross-env NODE_ENV=development micrforntend-builder --build",
-    "server": "cross-env NODE_ENV=development yarn webpack:server",
-    "test": "jest -c jest.config.js",
-    "webpack:build": "micrforntend-builder --build --library MicroComponent",
-    "webpack:server": "micrforntend-builder --dev-server --library MicroComponent"
+    "_builder": "micrforntend-builder --library MicroComponent",
+    "build": "yarn _builder --build",
+    "server": "yarn _builder --dev-server",
+    "test": "jest -c jest.config.js"
   },
   "dependencies": {
     "lodash": "^4.17.15",

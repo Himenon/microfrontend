@@ -30,6 +30,10 @@ export const generateConfig = ({
   extractCss = false,
   plugins = [],
 }: Props): webpack.Configuration => {
+  console.log(`process.env.NODE_ENV = ${process.env.NODE_ENV}, isProduction = ${isProduction}`);
+  if ((process.env.NODE_ENV === "production") !== isProduction) {
+    throw new Error("NODE_ENVとisProductionフラグに相違があります。")
+  }
   const isCI = process.env.CI;
   const tsLoader: webpack.RuleSetUse = {
     loader: "ts-loader",
