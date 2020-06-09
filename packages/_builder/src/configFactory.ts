@@ -20,8 +20,12 @@ export const getOverrideConfig = ({ externalAssets, ...props }: OverrideProps): 
     new CopyPlugin({
       // @ts-ignore
       patterns: [
-        { to: "scripts", from: find(props.isProduction ? "react-dom/umd/react-dom.production.min.js" : "react-dom/umd/react-dom.development.js") },
+        {
+          to: "scripts",
+          from: find(props.isProduction ? "react-dom/umd/react-dom.production.min.js" : "react-dom/umd/react-dom.development.js"),
+        },
         { to: "scripts", from: find(props.isProduction ? "react/umd/react.production.min.js" : "react/umd/react.development.js") },
+        { to: "scripts", from: find("regenerator-runtime/runtime.js") },
       ].concat(
         // { to: "scripts", from: find("@himenon/microfrontend-components/dist/MicroComponent.js") },
         externalAssets.map((asset) => ({
@@ -36,6 +40,7 @@ export const getOverrideConfig = ({ externalAssets, ...props }: OverrideProps): 
       minify: false,
       React: props.isProduction ? "./scripts/react.production.min.js" : "./scripts/react.development.js",
       ReactDOM: props.isProduction ? "./scripts/react-dom.production.min.js" : "./scripts/react-dom.development.js",
+      RegeneratorRuntime: "./scripts/runtime.js",
       // MicroComponent: "/scripts/MicroComponent.js",
       ...externalAssets.reduce((all, current) => {
         return {
@@ -62,7 +67,7 @@ export const getOverrideConfig = ({ externalAssets, ...props }: OverrideProps): 
     };
   }
   return config;
-}
+};
 
 export interface ExternalAppProps extends OverrideProps {
   libraryName: string;
@@ -87,6 +92,6 @@ export const generateExternalAppConfig = (props: ExternalAppProps): webpack.Conf
 export type AppProps = OverrideProps;
 
 export const generateAppConfig = (props: AppProps): webpack.Configuration => {
-  const config =  getOverrideConfig(props);
+  const config = getOverrideConfig(props);
   return config;
 };
