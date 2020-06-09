@@ -15,7 +15,7 @@ export interface OverrideProps extends Base.Props {
   externalAssets: ExternalAsset[];
 }
 
-export const getOverrideConfig = ({ externalAssets, ...props }: OverrideProps): webpack.Configuration => {
+const getOverrideConfig = ({ externalAssets, ...props }: OverrideProps): webpack.Configuration => {
   const plugins: webpack.Plugin[] = [
     new CopyPlugin({
       // @ts-ignore
@@ -73,7 +73,7 @@ export interface ExternalAppProps extends OverrideProps {
   libraryName: string;
 }
 
-export const generateExternalAppConfig = (props: ExternalAppProps): webpack.Configuration => {
+const generateExternalAppConfig = (props: ExternalAppProps): webpack.Configuration => {
   const config = getOverrideConfig(props);
   if (!props.isDevServer) {
     config.entry = {
@@ -91,7 +91,25 @@ export const generateExternalAppConfig = (props: ExternalAppProps): webpack.Conf
 
 export type AppProps = OverrideProps;
 
-export const generateAppConfig = (props: AppProps): webpack.Configuration => {
+const generateAppConfig = (props: AppProps): webpack.Configuration => {
   const config = getOverrideConfig(props);
   return config;
+};
+
+export type BuildParams =
+  | {
+      type: "library";
+      props: ExternalAppProps;
+    }
+  | {
+      type: "app";
+      props: AppProps;
+    };
+
+export const getConfig = (params: BuildParams): webpack.Configuration => {
+  if (params.type === "library") {
+    return generateExternalAppConfig(params.props);
+  } else {
+    return generateAppConfig(params.props);
+  }
 };

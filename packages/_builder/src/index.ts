@@ -85,30 +85,32 @@ const main = async () => {
   const isProduction = process.env.NODE_ENV === "production";
   const externalAssets = parseExternalAssets(args.externalAssets);
 
-  if (!args.build) {
-    if (args.devServer) {
-      if (args.libraryName) {
-        await server.externalApp({
+  if (!args.build && args.devServer) {
+    if (args.libraryName) {
+      await server.exec({
+        type: "library",
+        props: {
           isProduction,
           libraryName: args.libraryName,
           isDevServer: true,
           splitChunks: false,
           extractCss: false,
           externalAssets,
-        });
-        return;
-      }
-      if (args.app) {
-        await server.app({
+        },
+      });
+    } else if (args.app) {
+      await server.exec({
+        type: "app",
+        props: {
           isProduction,
           isDevServer: true,
           splitChunks: true,
           extractCss: true,
           externalAssets,
-        });
-        return;
-      }
+        },
+      });
     }
+    return;
   }
 
   if (args.app) {

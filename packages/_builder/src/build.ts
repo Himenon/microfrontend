@@ -6,27 +6,9 @@ import * as tsc from "./tsc";
 
 export type ExternalAsset = ConfigFactory.ExternalAsset;
 
-export type BuildParams =
-  | {
-      type: "library";
-      props: ConfigFactory.ExternalAppProps;
-    }
-  | {
-      type: "app";
-      props: ConfigFactory.AppProps;
-    };
-
-const getConfig = (params: BuildParams) => {
-  if (params.type === "library") {
-    return ConfigFactory.generateExternalAppConfig(params.props)
-  } else {
-    return ConfigFactory.generateAppConfig(params.props);
-  }
-}
-
-export const exec = (params: BuildParams): void => {
+export const exec = (params: ConfigFactory.BuildParams): void => {
   clean();
-  const config = getConfig(params);
+  const config = ConfigFactory.getConfig(params);
   const compiler = webpack(config);
   compiler.run((err) => {
     console.error(err);
