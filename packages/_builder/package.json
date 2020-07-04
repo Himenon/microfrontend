@@ -29,7 +29,7 @@
     "dts-bundle": "^0.7.3",
     "fibers": "^5.0.0",
     "fork-ts-checker-notifier-webpack-plugin": "^2.0.0",
-    "fork-ts-checker-webpack-plugin": "^4.1.6",
+    "fork-ts-checker-webpack-plugin": "^5.0.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "gh-pages": "^3.0.0",
     "html-webpack-plugin": "^4.3.0",
