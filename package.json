@@ -32,7 +32,7 @@
     }
   },
   "resolutions": {
-    "@types/webpack": "4.41.17",
+    "@types/webpack": "4.41.20",
     "@types/webpack-dev-server": "3.11.0"
   },
   "devDependencies": {
@@ -48,7 +48,7 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
-    "@types/webpack": "4.41.17",
+    "@types/webpack": "4.41.20",
     "@types/webpack-dev-server": "3.11.0",
     "@typescript-eslint/eslint-plugin": "^3.1.0",
     "@typescript-eslint/parser": "^3.1.0",
